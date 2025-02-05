@@ -20,5 +20,4 @@ struct LetterView: View {
     }
     
     @Environment(\.dismiss) var dismiss
-    
 }

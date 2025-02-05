@@ -9,6 +9,25 @@ import SwiftUI
 
 struct About: View {
     
+    //Initialize load fonts
+    init() {
+        if let fontURL = Bundle.main.url(forResource: "ShantellSans-SemiBold", withExtension: "ttf"),
+           let fontData = try? Data(contentsOf: fontURL) as CFData,
+           let provider = CGDataProvider(data: fontData),
+           let font = CGFont(provider) { CTFontManagerRegisterGraphicsFont(font, nil)}
+        else {
+            print("Failed to register custom font 'titleFont'.")
+        }
+        
+        if let exboldfontURL = Bundle.main.url(forResource: "ShantellSans-ExtraBold", withExtension: "ttf"),
+           let exboldfontData = try? Data(contentsOf: exboldfontURL) as CFData,
+           let exboldprovider = CGDataProvider(data: exboldfontData),
+           let exboldfont = CGFont(exboldprovider) { CTFontManagerRegisterGraphicsFont(exboldfont, nil)}
+        else {
+            print("Failed to register custom font 'ExtraboldFont'.")
+        }
+    }
+    
     @EnvironmentObject var pageViewModel: PageViewModel
     
     var body: some View {
@@ -31,7 +50,7 @@ struct About: View {
                     Group {
                         Text("This project was create by Songpob Hamthanan \nas a submission to the \nSwift Student Challenge 2025")
                     }
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .font(.custom("ShantellSans-SemiBold", size: 16))
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
