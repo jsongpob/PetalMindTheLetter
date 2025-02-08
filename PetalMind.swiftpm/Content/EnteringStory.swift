@@ -39,7 +39,7 @@ struct EnteringStory: View {
     @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var storyModel: StoryModel
     
-    @State private var showOpeningLetter: Bool = false
+    @State private var showOpeningLetter: Bool = true
     @State private var showInteractiveLetter: Bool = false
 
     var body: some View {
@@ -54,8 +54,6 @@ struct EnteringStory: View {
             ZStack {
                 if (showOpeningLetter) {
                     OpeningLetterView()
-                } else if (showInteractiveLetter) {
-                    InteractiveLetter()
                 } else {
                     LetterIntro()
                 }
@@ -74,8 +72,9 @@ struct EnteringStory: View {
                         if ( storyModel.currentIndexStory < storyData.count - 1) {
                             storyModel.currentIndexStory += 1
                         } else {
-                            showInteractiveLetter = true
-                            showOpeningLetter = false
+                            withAnimation {
+                                pageViewModel.introductionIsEnd = true
+                            }
                         }
                     } label: {
                         ZStack {
@@ -91,6 +90,7 @@ struct EnteringStory: View {
                             }
                         }
                     }
+                    .buttonStyle(.plain)
                 }
                 .frame(
                     maxWidth: .infinity, maxHeight: .infinity,

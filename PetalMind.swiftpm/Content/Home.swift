@@ -82,6 +82,7 @@ struct Home: View {
                             .scaledToFit()
                             .frame(width: 48, alignment: .center)
                     }
+                    .buttonStyle(.plain)
                     .padding(.top, 200)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
