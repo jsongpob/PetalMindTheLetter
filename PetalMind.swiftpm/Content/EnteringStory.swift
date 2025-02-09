@@ -8,33 +8,6 @@
 import SwiftUI
 
 struct EnteringStory: View {
-    
-    //Initialize load fonts
-    init() {
-        if let fontURL = Bundle.main.url(forResource: "ShantellSans-SemiBold", withExtension: "ttf"),
-           let fontData = try? Data(contentsOf: fontURL) as CFData,
-           let provider = CGDataProvider(data: fontData),
-           let font = CGFont(provider) { CTFontManagerRegisterGraphicsFont(font, nil)}
-        else {
-            print("Failed to register custom font 'SemiBoldFont'.")
-        }
-        
-        if let exboldfontURL = Bundle.main.url(forResource: "ShantellSans-ExtraBold", withExtension: "ttf"),
-           let exboldfontData = try? Data(contentsOf: exboldfontURL) as CFData,
-           let exboldprovider = CGDataProvider(data: exboldfontData),
-           let exboldfont = CGFont(exboldprovider) { CTFontManagerRegisterGraphicsFont(exboldfont, nil)}
-        else {
-            print("Failed to register custom font 'ExtraboldFont'.")
-        }
-        
-        if let mediumfontURL = Bundle.main.url(forResource: "ShantellSans-Medium", withExtension: "ttf"),
-           let mediumfontData = try? Data(contentsOf: mediumfontURL) as CFData,
-           let mediumprovider = CGDataProvider(data: mediumfontData),
-           let mediumfont = CGFont(mediumprovider) { CTFontManagerRegisterGraphicsFont(mediumfont, nil)}
-        else {
-            print("Failed to register custom font 'MediumFont'.")
-        }
-    }
 
     @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var storyModel: StoryModel
@@ -74,6 +47,7 @@ struct EnteringStory: View {
                         } else {
                             withAnimation {
                                 pageViewModel.introductionIsEnd = true
+                                pageViewModel.nextToInteractive()
                             }
                         }
                     } label: {

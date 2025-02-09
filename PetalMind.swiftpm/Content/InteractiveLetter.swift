@@ -8,45 +8,12 @@
 import SwiftUI
 
 struct InteractiveLetter: View {
+    
+    @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var interactiveModel: InteractiveModel
     @StateObject var stressManager = StressManager()
     @StateObject var dayManager = DayManager()
-    
-    //Initialize load fonts
-    init() {
-        if let fontURL = Bundle.main.url(
-            forResource: "ShantellSans-SemiBold", withExtension: "ttf"),
-            let fontData = try? Data(contentsOf: fontURL) as CFData,
-            let provider = CGDataProvider(data: fontData),
-            let font = CGFont(provider)
-        {
-            CTFontManagerRegisterGraphicsFont(font, nil)
-        } else {
-            print("Failed to register custom font 'titleFont'.")
-        }
-
-        if let exboldfontURL = Bundle.main.url(
-            forResource: "ShantellSans-ExtraBold", withExtension: "ttf"),
-            let exboldfontData = try? Data(contentsOf: exboldfontURL) as CFData,
-            let exboldprovider = CGDataProvider(data: exboldfontData),
-            let exboldfont = CGFont(exboldprovider)
-        {
-            CTFontManagerRegisterGraphicsFont(exboldfont, nil)
-        } else {
-            print("Failed to register custom font 'ExtraboldFont'.")
-        }
-        
-        if let boldfontURL = Bundle.main.url(
-            forResource: "ShantellSans-Bold", withExtension: "ttf"),
-            let boldfontData = try? Data(contentsOf: boldfontURL) as CFData,
-            let boldprovider = CGDataProvider(data: boldfontData),
-            let boldfont = CGFont(boldprovider)
-        {
-            CTFontManagerRegisterGraphicsFont(boldfont, nil)
-        } else {
-            print("Failed to register custom font 'BoldFont'.")
-        }
-    }
+    @StateObject var brainManager = BrainManager()
     
     let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 2)
 
@@ -57,53 +24,76 @@ struct InteractiveLetter: View {
                 .scaledToFill()
                 .frame(minWidth: 0)
                 .edgesIgnoringSafeArea(.all)
+            
             VStack(spacing: 0) {
-                Text("State of his mind")
-                    .font(.custom("ShantellSans-SemiBold", size: 20))
-                    .foregroundColor(Color(hex: 0x483528))
-                    .multilineTextAlignment(.center)
+                
+//                Group {
+                    Text("State of his mind")
+                        .font(.custom("ShantellSans-SemiBold", size: 20))
+                        .foregroundColor(Color(hex: 0x483528))
+                        .multilineTextAlignment(.center)
+                
                 DayView(currentDay: dayManager.currentDay, dayLeft: dayManager.dayLeft)
-                Brain(brainIndex: "BrainStateNormal")
+                Brain(brainStates: brainManager.brainImage)
                 StressLevel(currentStessLevel: Int(stressManager.stressLevel), maxStressLevel: Int(stressManager.maxStressLevel))
                     .padding(.horizontal, 30)
-                Group {
-                    VStack(spacing: 0) {
-                        Text("Behaviors")
-                            .font(.custom("ShantellSans-ExtraBold", size: 24))
-                            .foregroundColor(Color(hex: 0x483528))
-                            .multilineTextAlignment(.center)
-                        LazyVGrid(columns: columns, spacing: 5) {
-                            // Filter behaviors to show only those that haven't been selected
-                            ForEach(interactiveModel.randomizedBehaviors.filter { !$0.selected }, id: \.behaviorTitle) { behavior in
-                                Button {
-                                    interactiveModel.randomizeBehaviors()
-                                    stressManager.updateStressLevel(for: behavior)
-                                    dayManager.incrementDay()
-                                    
-                                    // Mark this behavior as selected
-                                    if let index = interactiveModel.behaviors.firstIndex(where: { $0.behaviorTitle == behavior.behaviorTitle }) {
-                                        interactiveModel.behaviors[index].selected = true
+//                }
+                
+                if (!pageViewModel.onSelectionResult) {
+                    Group {
+                        VStack(spacing: 0) {
+                            Text("Behaviors")
+                                .font(.custom("ShantellSans-ExtraBold", size: 24))
+                                .foregroundColor(Color(hex: 0x483528))
+                                .multilineTextAlignment(.center)
+                            
+                            LazyVGrid(columns: columns, spacing: 5) {
+                                
+                                // Filter behaviors to show only those that haven't been selected
+                                ForEach(interactiveModel.randomizedBehaviors.filter { !$0.selected }, id: \.behaviorTitle) { behavior in
+                                    Button {
+                                        if (dayManager.currentDay <= dayManager.maxDays && !dayManager.isDayOver) {
+                                            
+                                            interactiveModel.randomizeBehaviors()
+                                            stressManager.updateStressLevel(for: behavior)
+                                            dayManager.incrementDay()
+                                            pageViewModel.showSelectionResult(for: behavior)
+                                            brainManager.updateBrainState(stressLevel: stressManager.stressLevel)
+                                            
+                                        } else {
+                                            print("cannot increment day because dayManager.currentDay (\(dayManager.currentDay)) is less than or equal to dayManager.maxDays (\(dayManager.maxDays))")
+                                        }
+                                        
+                                        // Mark this behavior as selected
+                                        if let index = interactiveModel.behaviors.firstIndex(where: { $0.behaviorTitle == behavior.behaviorTitle }) {
+                                            interactiveModel.behaviors[index].selected = true
+                                        }
+                                        
+                                    } label: {
+                                        BehaviorCard(behaviorTitle: behavior.behaviorTitle, buttonImage: behavior.buttonImage)
                                     }
-
-                                } label: {
-                                    BehaviorCard(behaviorTitle: behavior.behaviorTitle, buttonImage: behavior.buttonImage)
+                                }
+                                .transaction { transaction in
+                                    transaction.animation = nil
                                 }
                             }
-                            .transaction { transaction in
-                                // Disable animation when updating the array
-                                transaction.animation = nil
+                            .onAppear {
+                                interactiveModel.randomizeBehaviors()
+                            }
+                            .padding(20)
+                        }
+                    }
+                } else {
+                    SelectionResult(behaviorIsPositive: pageViewModel.behaviorIsPositive)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    pageViewModel.onSelectionResult = false
+                                }
                             }
                         }
-                        .onAppear {
-                            // Randomize behaviors on view appearance
-                            interactiveModel.randomizeBehaviors()
-                        }
-
-                        .padding(20)
-                    }
                 }
             }
-            .padding(.vertical, 100)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
@@ -130,21 +120,18 @@ struct DayView: View {
                     .opacity(0.8)
                     .multilineTextAlignment(.center)
             }
-            .frame(width: .infinity, height: 100, alignment: .center)
         }
     }
 }
 
 struct Brain: View {
-    let brainIndex: String
+    let brainStates: String
     
     var body: some View {
         VStack {
-            Image(brainIndex)
+            Image(brainStates)
                 .resizable()
                 .scaledToFit()
-                .frame(width: .infinity, height: 280, alignment: .center)
-//                .background(Color(hex: 0xF2F2F2))
         }
     }
 }
@@ -166,7 +153,6 @@ struct StressLevel: View {
             }
             .padding(.bottom, 10)
         }
-        .frame(width: .infinity, height: 100, alignment: .center)
     }
 }
 
@@ -189,7 +175,45 @@ struct BehaviorCard: View {
     }
 }
 
+struct SelectionResult: View {
+    let behaviorIsPositive: Bool
+    
+    var body: some View {
+        VStack(spacing: 10) {
+            Text("You've chosen a")
+                .font(.custom("ShantellSans-SemiBold", size: 20))
+                .foregroundColor(Color(hex: 0x483528))
+                .multilineTextAlignment(.center)
+            if (behaviorIsPositive) {
+                Group {
+                    Text("“positive behavior”")
+                        .font(.custom("ShantellSans-ExtraBold", size: 36))
+                        .foregroundColor(Color(hex: 0x71CEA4))
+                        .multilineTextAlignment(.center)
+                    Text("His stress level has decreased!")
+                        .font(.custom("ShantellSans-SemiBold", size: 20))
+                        .foregroundColor(Color(hex: 0x483528))
+                        .multilineTextAlignment(.center)
+                }
+            } else {
+                Group {
+                    Text("“Negative behavior”")
+                        .font(.custom("ShantellSans-ExtraBold", size: 36))
+                        .foregroundColor(Color(hex: 0xF28F46))
+                        .multilineTextAlignment(.center)
+                    Text("causing his stress level to increase")
+                        .font(.custom("ShantellSans-SemiBold", size: 20))
+                        .foregroundColor(Color(hex: 0x483528))
+                        .multilineTextAlignment(.center)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+}
+
 #Preview {
     InteractiveLetter()
         .environmentObject(InteractiveModel())
+        .environmentObject(PageViewModel())
 }

@@ -2,23 +2,14 @@ import SwiftUI
 
 struct Home: View {
     
+    let fontManager = CustomFonts()
+    
     //Initialize load fonts
     init() {
-        if let fontURL = Bundle.main.url(forResource: "ShantellSans-SemiBold", withExtension: "ttf"),
-           let fontData = try? Data(contentsOf: fontURL) as CFData,
-           let provider = CGDataProvider(data: fontData),
-           let font = CGFont(provider) { CTFontManagerRegisterGraphicsFont(font, nil)}
-        else {
-            print("Failed to register custom font 'titleFont'.")
-        }
-        
-        if let exboldfontURL = Bundle.main.url(forResource: "ShantellSans-ExtraBold", withExtension: "ttf"),
-           let exboldfontData = try? Data(contentsOf: exboldfontURL) as CFData,
-           let exboldprovider = CGDataProvider(data: exboldfontData),
-           let exboldfont = CGFont(exboldprovider) { CTFontManagerRegisterGraphicsFont(exboldfont, nil)}
-        else {
-            print("Failed to register custom font 'ExtraboldFont'.")
-        }
+        fontManager.registerFontIfNeeded(fontName: "ShantellSans-SemiBold", fileName: "ShantellSans-SemiBold")
+        fontManager.registerFontIfNeeded(fontName: "ShantellSans-ExtraBold", fileName: "ShantellSans-ExtraBold")
+        fontManager.registerFontIfNeeded(fontName: "ShantellSans-Bold", fileName: "ShantellSans-Bold")
+        fontManager.registerFontIfNeeded(fontName: "ShantellSans-Medium", fileName: "ShantellSans-Medium")
     }
     
     @EnvironmentObject var pageViewModel: PageViewModel
@@ -50,7 +41,7 @@ struct Home: View {
                             .foregroundColor(Color(hex: 0x483528))
                             .multilineTextAlignment(.center)
                         Button {
-                            pageViewModel.displayLetter = true
+                            pageViewModel.nextToIntroduction()
                         } label: {
                             ZStack {
                                 Image("MainButton")
@@ -75,7 +66,9 @@ struct Home: View {
                     }
                     //Buttom Button
                     Button {
-                        pageViewModel.displayAbout.toggle()
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            pageViewModel.displayAbout.toggle()
+                        }
                     } label: {
                         Image("QuestionIcon")
                             .resizable()

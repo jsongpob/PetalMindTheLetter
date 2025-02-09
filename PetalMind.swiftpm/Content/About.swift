@@ -9,25 +9,6 @@ import SwiftUI
 
 struct About: View {
     
-    //Initialize load fonts
-    init() {
-        if let fontURL = Bundle.main.url(forResource: "ShantellSans-SemiBold", withExtension: "ttf"),
-           let fontData = try? Data(contentsOf: fontURL) as CFData,
-           let provider = CGDataProvider(data: fontData),
-           let font = CGFont(provider) { CTFontManagerRegisterGraphicsFont(font, nil)}
-        else {
-            print("Failed to register custom font 'titleFont'.")
-        }
-        
-        if let exboldfontURL = Bundle.main.url(forResource: "ShantellSans-ExtraBold", withExtension: "ttf"),
-           let exboldfontData = try? Data(contentsOf: exboldfontURL) as CFData,
-           let exboldprovider = CGDataProvider(data: exboldfontData),
-           let exboldfont = CGFont(exboldprovider) { CTFontManagerRegisterGraphicsFont(exboldfont, nil)}
-        else {
-            print("Failed to register custom font 'ExtraboldFont'.")
-        }
-    }
-    
     @EnvironmentObject var pageViewModel: PageViewModel
     
     var body: some View {
@@ -59,7 +40,9 @@ struct About: View {
                 
                 //Buttom Button
                 Button {
-                    pageViewModel.displayAbout.toggle()
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        pageViewModel.displayAbout.toggle()
+                    }
                 } label: {
                     Image("CloseIcon")
                         .resizable()

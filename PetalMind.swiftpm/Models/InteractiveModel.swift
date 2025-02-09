@@ -22,51 +22,46 @@ class InteractiveModel: ObservableObject {
     
     @Published var behaviors: [Behavior] = [
         // Good behaviors
-        Behavior(behaviorTitle: "Exercise", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Healthy Eating", buttonImage: "BehaviorButtonLeft", stressLevel: 5.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Exercise", buttonImage: "BehaviorButtonLeft", stressLevel: 15.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Healthy Eating", buttonImage: "BehaviorButtonLeft", stressLevel: 15.0, increase: false, selected: false),
         Behavior(behaviorTitle: "Family Time", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
         Behavior(behaviorTitle: "Learning Skills", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
         Behavior(behaviorTitle: "Focused Work", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
-        
-        // More good behaviors (9 additional)
-        Behavior(behaviorTitle: "Meditation", buttonImage: "BehaviorButtonLeft", stressLevel: 8.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Taking Breaks", buttonImage: "BehaviorButtonLeft", stressLevel: 8.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Reading", buttonImage: "BehaviorButtonLeft", stressLevel: 5.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Creative Hobbies", buttonImage: "BehaviorButtonLeft", stressLevel: 6.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Journaling", buttonImage: "BehaviorButtonLeft", stressLevel: 4.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Socializing", buttonImage: "BehaviorButtonLeft", stressLevel: 6.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Sleep Well", buttonImage: "BehaviorButtonLeft", stressLevel: 5.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Organize Tasks", buttonImage: "BehaviorButtonLeft", stressLevel: 4.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Outdoor Time", buttonImage: "BehaviorButtonLeft", stressLevel: 7.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Positive Mind", buttonImage: "BehaviorButtonLeft", stressLevel: 3.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Helping Others", buttonImage: "BehaviorButtonLeft", stressLevel: 8.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Positive Affirmations", buttonImage: "BehaviorButtonLeft", stressLevel: 5.0, increase: false, selected: false),
-        Behavior(behaviorTitle: "Gratitude Practice", buttonImage: "BehaviorButtonLeft", stressLevel: 6.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Meditation", buttonImage: "BehaviorButtonLeft", stressLevel: 20.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Taking Breaks", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Reading", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Creative Hobbies", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Journaling", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Socializing", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Sleep Well", buttonImage: "BehaviorButtonLeft", stressLevel: 15.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Organize Tasks", buttonImage: "BehaviorButtonLeft", stressLevel: 5.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Outdoor Time", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Positive Mind", buttonImage: "BehaviorButtonLeft", stressLevel: 15.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Helping Others", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Positive Affirmations", buttonImage: "BehaviorButtonLeft", stressLevel: 10.0, increase: false, selected: false),
+        Behavior(behaviorTitle: "Gratitude Practice", buttonImage: "BehaviorButtonLeft", stressLevel: 5.0, increase: false, selected: false),
         
         // Bad behaviors
-        Behavior(behaviorTitle: "Avoiding Problems", buttonImage: "BehaviorButtonRight", stressLevel: 20.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Avoiding Problems", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
         Behavior(behaviorTitle: "Negative Self-talk", buttonImage: "BehaviorButtonRight", stressLevel: 20.0, increase: true, selected: false),
         Behavior(behaviorTitle: "Overworking", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
         Behavior(behaviorTitle: "Judging Others", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
         Behavior(behaviorTitle: "Unhealthy Eating", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
-        
-        // More bad behaviors (9 additional)
-        Behavior(behaviorTitle: "Excessive Social Media", buttonImage: "BehaviorButtonRight", stressLevel: 12.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Delaying Tasks", buttonImage: "BehaviorButtonRight", stressLevel: 12.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Avoiding Duties", buttonImage: "BehaviorButtonRight", stressLevel: 18.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Excessive Social Media", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Delaying Tasks", buttonImage: "BehaviorButtonRight", stressLevel: 5.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Avoiding Duties", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
         Behavior(behaviorTitle: "Isolation", buttonImage: "BehaviorButtonRight", stressLevel: 15.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Anger Issues", buttonImage: "BehaviorButtonRight", stressLevel: 18.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Junk Food", buttonImage: "BehaviorButtonRight", stressLevel: 14.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Complaining", buttonImage: "BehaviorButtonRight", stressLevel: 13.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Anger Issues", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Junk Food", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Complaining", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
         Behavior(behaviorTitle: "Poor Sleep", buttonImage: "BehaviorButtonRight", stressLevel: 15.0, increase: true, selected: false),
         Behavior(behaviorTitle: "Being Late", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Ignoring Health", buttonImage: "BehaviorButtonRight", stressLevel: 17.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Anger Outbursts", buttonImage: "BehaviorButtonRight", stressLevel: 18.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Ignoring Feelings", buttonImage: "BehaviorButtonRight", stressLevel: 12.0, increase: true, selected: false),
-        Behavior(behaviorTitle: "Living in the Past", buttonImage: "BehaviorButtonRight", stressLevel: 14.0, increase: true, selected: false)
+        Behavior(behaviorTitle: "Ignoring Health", buttonImage: "BehaviorButtonRight", stressLevel: 20.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Anger Outbursts", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Ignoring Feelings", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false),
+        Behavior(behaviorTitle: "Living in the Past", buttonImage: "BehaviorButtonRight", stressLevel: 10.0, increase: true, selected: false)
     ]
 
-    
     // Split behaviors by increase value
     var goodBehaviors: [Behavior] {
         return behaviors.filter { !$0.increase && !$0.selected }
@@ -87,7 +82,7 @@ class InteractiveModel: ObservableObject {
 }
 
 class StressManager: ObservableObject {
-    @Published var stressLevel: Double = 50.0 // Initial stress level
+    @Published var stressLevel: Double = 50.0
     @Published var maxStressLevel: Double = 100.0
 
     func updateStressLevel(for behavior: Behavior) {
@@ -96,13 +91,13 @@ class StressManager: ObservableObject {
         } else {
             stressLevel -= behavior.stressLevel
         }
-
         // Prevent stress level from dropping below 0
         stressLevel = min(max(stressLevel, 0), 100)
     }
 }
 
 class DayManager: ObservableObject {
+    @Published var isDayOver: Bool = false
     @Published var currentDay: Int = 1
     let maxDays: Int = 5
     
@@ -113,6 +108,37 @@ class DayManager: ObservableObject {
     func incrementDay() {
         if currentDay < maxDays {
             currentDay += 1
+        } else {
+            isDayOver = true
+        }
+    }
+}
+
+class BrainManager: ObservableObject {
+    @Published var brainImage: String = "brainState3"
+    
+    public func updateBrainState(stressLevel: Double) {
+        let newImage = changeBrainStatePicture(stressLevel: stressLevel)
+        
+        withAnimation {
+            brainImage = newImage
+        }
+    }
+    
+    func changeBrainStatePicture(stressLevel: Double) -> String {
+        switch stressLevel {
+        case ...20:
+            return "brainState1"
+        case 21...40:
+            return "brainState2"
+        case 41...60:
+            return "brainState3"
+        case 61...80:
+            return "brainState4"
+        case 81...100:
+            return "brainState5"
+        default:
+            return "brainState3"
         }
     }
 }

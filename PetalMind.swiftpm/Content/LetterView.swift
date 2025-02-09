@@ -12,11 +12,13 @@ struct LetterView: View {
     @EnvironmentObject var pageViewModel: PageViewModel
     
     var body: some View {
-        if (pageViewModel.introductionIsEnd) {
+        if (pageViewModel.onInteractive) {
             InteractiveLetter()
                 .transition(.opacity)
-        } else {
+        } else if (pageViewModel.onIntroduction) {
             EnteringStory()
+        } else {
+            Text("Conclusion")
         }
     }
     
