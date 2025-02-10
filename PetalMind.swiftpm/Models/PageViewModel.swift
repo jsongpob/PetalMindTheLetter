@@ -23,6 +23,8 @@ class PageViewModel: ObservableObject {
     @Published var onSelectionResult: Bool = false
     @Published var behaviorIsPositive: Bool = false
     
+    @Published var onInteractiveGuide: Bool = false
+    
     func nextToConclusion() {
         onIntroduction = false
         onInteractive = false

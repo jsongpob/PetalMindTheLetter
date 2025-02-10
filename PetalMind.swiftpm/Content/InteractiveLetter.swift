@@ -11,6 +11,7 @@ struct InteractiveLetter: View {
     
     @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var interactiveModel: InteractiveModel
+    @EnvironmentObject var guideViewContentModel: GuideViewContentModel
     @StateObject var stressManager = StressManager()
     @StateObject var dayManager = DayManager()
     @StateObject var brainManager = BrainManager()
@@ -96,6 +97,29 @@ struct InteractiveLetter: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .overlay {
+            if (pageViewModel.onInteractiveGuide) {
+                GuideView(currentPage: guideViewContentModel.currentPage)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .background(.black.opacity(0.5))
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            if guideViewContentModel.currentPage < guideViewContentModel.pages.count - 1 {
+                                guideViewContentModel.nextPage()
+                            } else {
+                                pageViewModel.onInteractiveGuide = false
+                            }
+                        }
+                    }
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    pageViewModel.onInteractiveGuide = true
+                }
+            }
+        }
     }
 }
 
@@ -212,8 +236,42 @@ struct SelectionResult: View {
     }
 }
 
+struct GuideView: View {
+    let currentPage: Int
+
+    var body: some View {
+        ZStack {
+            Image("overlayPaper")
+                .resizable()
+                .scaledToFit()
+            VStack(spacing: 0) {
+                
+                switch currentPage {
+                case 0:
+                    GuideViewContent1()
+                case 1:
+                    GuideViewContent2()
+                case 2:
+                    GuideViewContent3()
+                default:
+                    GuideViewContent1()
+                }
+                
+                Spacer()
+                
+                Image("ArrowRightIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+            }
+            .frame(maxWidth: .infinity, maxHeight: 650, alignment: .center)
+        }
+    }
+}
+
 #Preview {
     InteractiveLetter()
         .environmentObject(InteractiveModel())
         .environmentObject(PageViewModel())
+        .environmentObject(GuideViewContentModel())
 }
