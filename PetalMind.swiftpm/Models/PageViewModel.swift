@@ -17,6 +17,7 @@ class PageViewModel: ObservableObject {
     @Published var conclusionIsEnd: Bool = false
     
     @Published var onIntroduction: Bool = false
+    @Published var onReceive: Bool = false
     @Published var onInteractive: Bool = false
     @Published var onConclusion: Bool = false
     
@@ -29,16 +30,26 @@ class PageViewModel: ObservableObject {
         onIntroduction = false
         onInteractive = false
         onConclusion = true
+        onReceive = false
+    }
+    
+    func nexToReceiveLetter() {
+        displayLetter = true
+        onIntroduction = false
+        onInteractive = false
+        onConclusion = false
+        onReceive = true
     }
     
     func nextToInteractive() {
         onIntroduction = false
         onInteractive = true
         onConclusion = false
+        onReceive = false
     }
     
     func nextToIntroduction() {
-        displayLetter = true
+        onReceive = false
         onIntroduction = true
         onInteractive = false
         onConclusion = false

@@ -15,7 +15,10 @@ struct LetterView: View {
         if (pageViewModel.onInteractive) {
             InteractiveLetter()
                 .transition(.opacity)
-        } else if (pageViewModel.onIntroduction) {
+        } else if (pageViewModel.onReceive) {
+            ReceiveView()
+        }
+        else if (pageViewModel.onIntroduction) {
             EnteringStory()
         } else {
             Text("Conclusion")

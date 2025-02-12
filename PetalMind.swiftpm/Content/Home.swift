@@ -41,7 +41,7 @@ struct Home: View {
                             .foregroundColor(Color(hex: 0x483528))
                             .multilineTextAlignment(.center)
                         Button {
-                            pageViewModel.nextToIntroduction()
+                            pageViewModel.nexToReceiveLetter()
                         } label: {
                             ZStack {
                                 Image("MainButton")

@@ -7,6 +7,7 @@ struct MyApp: App {
     @StateObject private var storyModel = StoryModel()
     @StateObject private var interactiveModel = InteractiveModel()
     @StateObject private var guideViewContentModel = GuideViewContentModel()
+    @StateObject private var photoModel = PhotoModel()
     
     var body: some Scene {
         WindowGroup {
@@ -15,6 +16,7 @@ struct MyApp: App {
                 .environmentObject(storyModel)
                 .environmentObject(interactiveModel)
                 .environmentObject(guideViewContentModel)
+                .environmentObject(photoModel)
         }
     }
 }

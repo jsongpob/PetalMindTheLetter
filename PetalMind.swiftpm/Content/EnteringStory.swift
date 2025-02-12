@@ -111,4 +111,5 @@ struct LetterIntro: View {
 
 #Preview {
     EnteringStory()
+        .environmentObject(StoryModel())
 }
