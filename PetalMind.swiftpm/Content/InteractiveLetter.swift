@@ -9,6 +9,16 @@ import SwiftUI
 
 struct InteractiveLetter: View {
     
+//    let fontManager = CustomFonts()
+//    
+//    //Initialize load fonts
+//    init() {
+//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-SemiBold", fileName: "ShantellSans-SemiBold")
+//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-ExtraBold", fileName: "ShantellSans-ExtraBold")
+//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-Bold", fileName: "ShantellSans-Bold")
+//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-Medium", fileName: "ShantellSans-Medium")
+//    }
+    
     @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var interactiveModel: InteractiveModel
     @EnvironmentObject var guideViewContentModel: GuideViewContentModel
@@ -55,7 +65,6 @@ struct InteractiveLetter: View {
                                     Button {
                                         if (dayManager.currentDay <= dayManager.maxDays && !dayManager.isDayOver) {
                                             
-                                            interactiveModel.randomizeBehaviors()
                                             stressManager.updateStressLevel(for: behavior)
                                             dayManager.incrementDay()
                                             pageViewModel.showSelectionResult(for: behavior)
@@ -71,7 +80,7 @@ struct InteractiveLetter: View {
                                         }
                                         
                                     } label: {
-                                        BehaviorCard(behaviorTitle: behavior.behaviorTitle, buttonImage: behavior.buttonImage)
+                                        BehaviorCard(behaviorTitle: behavior.behaviorTitle, buttonImage: behavior.buttonImage, iconImage: behavior.iconImage)
                                     }
                                 }
                                 .transaction { transaction in
@@ -114,7 +123,7 @@ struct InteractiveLetter: View {
             }
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     pageViewModel.onInteractiveGuide = true
                 }
@@ -183,18 +192,25 @@ struct StressLevel: View {
 struct BehaviorCard: View {
     let behaviorTitle: String
     let buttonImage: String
+    let iconImage: String
     
     var body: some View {
         ZStack {
             Image(buttonImage)
                 .resizable()
                 .scaledToFit()
-            Text(behaviorTitle)
-                .font(.custom("ShantellSans-Extrabold", size: 20))
-                .foregroundColor(Color(hex: 0x483528))
-                .multilineTextAlignment(.center)
-                .padding(.bottom, 2)
-                .frame(width: 150, height: 60, alignment: .center)
+            HStack(spacing: 10) {
+                Image(iconImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 30, maxHeight: 30, alignment: .center)
+                Text(behaviorTitle)
+                    .font(.custom("ShantellSans-Extrabold", size: 18))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.leading)
+                    .padding(.bottom, 2)
+            }
+            .frame(maxWidth: 170, maxHeight: 60, alignment: .center)
         }
     }
 }
@@ -243,7 +259,7 @@ struct GuideView: View {
         ZStack {
             Image("overlayPaper")
                 .resizable()
-                .scaledToFit()
+            
             VStack(spacing: 0) {
                 
                 switch currentPage {

@@ -21,7 +21,7 @@ class GuideViewContentModel: ObservableObject {
 struct GuideViewContent1: View {
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 15) {
+            VStack(spacing: 5) {
                 Text("1/3")
                     .font(.custom("ShantellSans-Medium", size: 14))
                     .foregroundColor(Color(hex: 0x483528))
@@ -38,12 +38,12 @@ struct GuideViewContent1: View {
             StressLevel(currentStessLevel: 50, maxStressLevel: 100)
                 .frame(width: 350)
                 .scaledToFit()
-            VStack(spacing: 20) {
+            VStack(spacing: 10) {
                 Text("The goal is...")
                     .font(.custom("ShantellSans-Extrabold", size: 24))
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
-                Text("Help him reduce his stress level by \nlowering it as much as possible")
+                Text("Help him reduce his stress level \nby lowering it as much as possible")
                     .font(.custom("ShantellSans-Medium", size: 18))
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
@@ -56,7 +56,7 @@ struct GuideViewContent1: View {
 struct GuideViewContent2: View {
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 15) {
+            VStack(spacing: 5) {
                 Text("2/3")
                     .font(.custom("ShantellSans-Medium", size: 14))
                     .foregroundColor(Color(hex: 0x483528))
@@ -66,7 +66,7 @@ struct GuideViewContent2: View {
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
             }
-            BehaviorCard(behaviorTitle: "Lack of Sleep", buttonImage: "BehaviorButtonLeft")
+            BehaviorCard(behaviorTitle: "Lack of Sleep", buttonImage: "BehaviorButtonLeft", iconImage: "lackOfSleep")
                 .scaledToFit()
                 .frame(width: 200, height: 150)
             VStack(spacing: 20) {
@@ -107,7 +107,7 @@ struct GuideViewContent2: View {
 struct GuideViewContent3: View {
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 15) {
+            VStack(spacing: 5) {
                 Text("3/3")
                     .font(.custom("ShantellSans-Medium", size: 14))
                     .foregroundColor(Color(hex: 0x483528))
@@ -158,5 +158,5 @@ struct GuideViewContent3: View {
 }
 
 #Preview {
-    GuideViewContent3()
+    GuideViewContent1()
 }
