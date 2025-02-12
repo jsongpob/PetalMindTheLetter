@@ -17,8 +17,9 @@ struct LetterView: View {
                 .transition(.opacity)
         } else if (pageViewModel.onReceive) {
             ReceiveView()
-        }
-        else if (pageViewModel.onIntroduction) {
+        } else if (pageViewModel.onEnterName) {
+            UserEnteringNameView()
+        } else if (pageViewModel.onIntroduction) {
             EnteringStory()
         } else {
             Text("Conclusion")

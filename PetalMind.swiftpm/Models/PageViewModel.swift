@@ -18,6 +18,8 @@ class PageViewModel: ObservableObject {
     
     @Published var onIntroduction: Bool = false
     @Published var onReceive: Bool = false
+    @Published var onEnterName: Bool = false
+    @Published var onUserReceived: Bool = false
     @Published var onInteractive: Bool = false
     @Published var onConclusion: Bool = false
     
@@ -33,7 +35,7 @@ class PageViewModel: ObservableObject {
         onReceive = false
     }
     
-    func nexToReceiveLetter() {
+    func nextToReceiveLetter() {
         displayLetter = true
         onIntroduction = false
         onInteractive = false
@@ -41,11 +43,21 @@ class PageViewModel: ObservableObject {
         onReceive = true
     }
     
+    func nextToEnterName() {
+        onIntroduction = false
+        onInteractive = false
+        onConclusion = false
+        onReceive = false
+        onEnterName = true
+    }
+    
     func nextToInteractive() {
         onIntroduction = false
         onInteractive = true
         onConclusion = false
         onReceive = false
+        onEnterName = false
+        onUserReceived = false
     }
     
     func nextToIntroduction() {
@@ -53,6 +65,8 @@ class PageViewModel: ObservableObject {
         onIntroduction = true
         onInteractive = false
         onConclusion = false
+        onEnterName = false
+        onUserReceived = false
     }
     
     func showSelectionResult(for behavior: Behavior) {

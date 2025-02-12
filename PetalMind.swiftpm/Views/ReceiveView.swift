@@ -46,7 +46,7 @@ struct ReceiveView: View {
                         if (photoModel.image == nil) {
                             photoModel.isConfirming = true
                         } else {
-                            print("Continue")
+                            pageViewModel.nextToEnterName()
                         }
                     } label: {
                         ZStack {
