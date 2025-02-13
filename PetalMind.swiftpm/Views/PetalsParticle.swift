@@ -69,12 +69,12 @@ struct PetalParticleView: View {
         Image(particle.imageName) // Use custom image
             .resizable()
             .scaledToFit()
-            .frame(width: 80, height: 80) // Adjust size
+            .frame(width: CGFloat.random(in: 40...100), height: CGFloat.random(in: 40...100)) // Adjust size
             .position(center)
             .offset(offset)
             .opacity(opacity)
             .onAppear {
-                withAnimation(.easeOut(duration: 1.5)) {
+                withAnimation(.easeOut(duration: CGFloat.random(in: 1...3))) {
                     offset = CGSize(width: particle.endPoint.x, height: particle.endPoint.y)
                     opacity = 0
                 }
@@ -89,7 +89,7 @@ struct PetalsBurst: Identifiable {
 
     init(center: CGPoint, isPositive: Bool) {
         self.center = center
-        let particleCount: Int = Int.random(in: 12...24)
+        let particleCount: Int = Int.random(in: 12...36)
         self.particles = (0..<particleCount).map { _ in PetalsParticle(isPositive: isPositive) }
     }
 }
