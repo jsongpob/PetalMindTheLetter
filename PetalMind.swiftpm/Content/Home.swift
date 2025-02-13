@@ -13,6 +13,8 @@ struct Home: View {
     }
     
     @EnvironmentObject var pageViewModel: PageViewModel
+    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var photoModel: PhotoModel
     
     var body: some View {
         ZStack {

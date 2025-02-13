@@ -31,6 +31,7 @@ struct EnteringStory: View {
                     LetterIntro()
                 }
             }
+            .padding(.bottom, 60)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                     withAnimation(.easeInOut(duration: 0.5)) {
@@ -66,10 +67,7 @@ struct EnteringStory: View {
                     }
                     .buttonStyle(.plain)
                 }
-                .frame(
-                    maxWidth: .infinity, maxHeight: .infinity,
-                    alignment: .bottom
-                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                 .padding(.bottom, 40)
             }
         }
@@ -95,11 +93,13 @@ struct LetterIntro: View {
     @EnvironmentObject var storyModel: StoryModel
     
     var body: some View {
-            VStack {
+        VStack(spacing: 20) {
+            if (storyData[storyModel.currentIndexStory].imageName != "") {
                 Image(storyData[storyModel.currentIndexStory].imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 160, alignment: .center)
+                    .frame(width: 200, alignment: .center)
+            }
                 Text(storyData[storyModel.currentIndexStory].text)
                     .font(.custom("ShantellSans-Medium", size: 20))
                     .multilineTextAlignment(.center)

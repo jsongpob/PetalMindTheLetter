@@ -8,20 +8,11 @@
 import SwiftUI
 
 struct InteractiveLetter: View {
-    
-//    let fontManager = CustomFonts()
-//    
-//    //Initialize load fonts
-//    init() {
-//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-SemiBold", fileName: "ShantellSans-SemiBold")
-//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-ExtraBold", fileName: "ShantellSans-ExtraBold")
-//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-Bold", fileName: "ShantellSans-Bold")
-//        fontManager.registerFontIfNeeded(fontName: "ShantellSans-Medium", fileName: "ShantellSans-Medium")
-//    }
-    
+
     @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var interactiveModel: InteractiveModel
     @EnvironmentObject var guideViewContentModel: GuideViewContentModel
+    @EnvironmentObject var resultViewModelContent: ResultViewModelContent
     @StateObject var stressManager = StressManager()
     @StateObject var dayManager = DayManager()
     @StateObject var brainManager = BrainManager()
@@ -38,17 +29,21 @@ struct InteractiveLetter: View {
             
             VStack(spacing: 0) {
                 
-//                Group {
-                    Text("State of his mind")
-                        .font(.custom("ShantellSans-SemiBold", size: 20))
-                        .foregroundColor(Color(hex: 0x483528))
-                        .multilineTextAlignment(.center)
+                Text("State of his mind")
+                    .font(.custom("ShantellSans-SemiBold", size: 20))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.center)
                 
-                DayView(currentDay: dayManager.currentDay, dayLeft: dayManager.dayLeft)
-                Brain(brainStates: brainManager.brainImage)
-                StressLevel(currentStessLevel: Int(stressManager.stressLevel), maxStressLevel: Int(stressManager.maxStressLevel))
-                    .padding(.horizontal, 30)
-//                }
+                ZStack {
+                    VStack(spacing: 0) {
+                        DayView(currentDay: dayManager.currentDay, dayLeft: dayManager.dayLeft)
+                        Brain(brainStates: brainManager.brainImage)
+                        StressLevel(currentStessLevel: Int(stressManager.stressLevel), maxStressLevel: Int(stressManager.maxStressLevel))
+                            .padding(.horizontal, 30)
+                    }
+                    PetalsView()
+                        .frame(width: 0, height: 0, alignment: .center)
+                }
                 
                 if (!pageViewModel.onSelectionResult) {
                     Group {
@@ -90,7 +85,7 @@ struct InteractiveLetter: View {
                             .onAppear {
                                 interactiveModel.randomizeBehaviors()
                             }
-                            .padding(20)
+                            .padding(10)
                         }
                     }
                 } else {
@@ -99,6 +94,7 @@ struct InteractiveLetter: View {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     pageViewModel.onSelectionResult = false
+                                    pageViewModel.showPetalParticle = false
                                 }
                             }
                         }
@@ -117,6 +113,20 @@ struct InteractiveLetter: View {
                                 guideViewContentModel.nextPage()
                             } else {
                                 pageViewModel.onInteractiveGuide = false
+                            }
+                        }
+                    }
+            }
+            if (pageViewModel.onResulted) {
+                ResultedView(currentPage: resultViewModelContent.currentPage)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .background(.black.opacity(0.5))
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            if resultViewModelContent.currentPage < resultViewModelContent.pages.count - 1 {
+                                resultViewModelContent.nextPage()
+                            } else {
+                                pageViewModel.onResulted = false
                             }
                         }
                     }
@@ -161,7 +171,7 @@ struct Brain: View {
     let brainStates: String
     
     var body: some View {
-        VStack {
+        ZStack {
             Image(brainStates)
                 .resizable()
                 .scaledToFit()
@@ -248,7 +258,7 @@ struct SelectionResult: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .padding(.vertical, 60)
     }
 }
 
@@ -265,6 +275,39 @@ struct GuideView: View {
                 switch currentPage {
                 case 0:
                     GuideViewContent1()
+                case 1:
+                    GuideViewContent2()
+                case 2:
+                    GuideViewContent3()
+                default:
+                    GuideViewContent1()
+                }
+                
+                Spacer()
+                
+                Image("ArrowRightIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+            }
+            .frame(maxWidth: .infinity, maxHeight: 650, alignment: .center)
+        }
+    }
+}
+
+struct ResultedView: View {
+    let currentPage: Int
+    
+    var body: some View {
+        ZStack {
+            Image("overlayPaper")
+                .resizable()
+            
+            VStack(spacing: 0) {
+                
+                switch currentPage {
+                case 0:
+                    ResultViewContent1()
                 case 1:
                     GuideViewContent2()
                 case 2:

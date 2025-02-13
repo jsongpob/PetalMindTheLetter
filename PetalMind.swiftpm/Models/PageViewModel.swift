@@ -22,11 +22,15 @@ class PageViewModel: ObservableObject {
     @Published var onUserReceived: Bool = false
     @Published var onInteractive: Bool = false
     @Published var onConclusion: Bool = false
+    @Published var onResulted: Bool = false
     
     @Published var onSelectionResult: Bool = false
     @Published var behaviorIsPositive: Bool = false
     
     @Published var onInteractiveGuide: Bool = false
+    
+    @Published var isPetalPositive: Bool = false
+    @Published var showPetalParticle: Bool = false
     
     func nextToConclusion() {
         onIntroduction = false
@@ -72,12 +76,33 @@ class PageViewModel: ObservableObject {
     func showSelectionResult(for behavior: Behavior) {
         if behavior.increase {
             behaviorIsPositive = false
+            isPetalPositive = false
         } else {
             behaviorIsPositive = true
+            isPetalPositive = true
         }
+        
+        showPetalParticle = true
         
         withAnimation(.easeInOut(duration: 0.5)) {
             onSelectionResult = true
         }
+    }
+    
+    func resetValue() {
+        displayAbout = false
+        displayLetter = false
+        introductionIsEnd = false
+        interactiveIsEnd = false
+        conclusionIsEnd = false
+        onIntroduction = false
+        onReceive = false
+        onEnterName = false
+        onUserReceived = false
+        onInteractive = false
+        onConclusion = false
+        onSelectionResult = false
+        behaviorIsPositive = false
+        onInteractiveGuide = false
     }
 }

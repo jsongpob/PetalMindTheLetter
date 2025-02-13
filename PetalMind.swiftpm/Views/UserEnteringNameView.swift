@@ -83,6 +83,7 @@ struct EnteringNameView: View {
 struct UserReceiveView: View {
     @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var photoModel: PhotoModel
+    @EnvironmentObject var userModel: UserModel
     @State var isReceiving: Bool = true
     
     var body: some View {
@@ -106,17 +107,46 @@ struct UserReceiveView: View {
                     VStack {
                         Spacer()
                         VStack {
-                            Text("This letter was sent to you by \nthe sender... from the future")
-                                .font(.custom("ShantellSans-SemiBold", size: 18))
-                                .foregroundColor(Color(hex: 0x483528))
-                                .multilineTextAlignment(.center)
-                            Image("")
+                            VStack(spacing: 0) {
+                                Text("This letter was sent to you by \nthe sender... from the future")
+                                    .font(.custom("ShantellSans-SemiBold", size: 18))
+                                    .foregroundColor(Color(hex: 0x483528))
+                                    .multilineTextAlignment(.center)
+                                ZStack {
+                                    Image("theMailLetter")
+                                        .resizable()
+                                        .scaledToFit()
+                                    VStack(spacing: 65) {
+                                        HStack {
+                                            Text("To... \(userModel.nameOfUser)")
+                                                .font(.custom("ShantellSans-SemiBold", size: 22))
+                                                .foregroundColor(Color(hex: 0x483528))
+                                                .multilineTextAlignment(.leading)
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                                        .padding(.leading, 40)
+                                        .padding(.top, 10)
+                                    
+                                        HStack {
+                                            Text(userModel.futureDate.formatted(date: .long, time: .omitted))
+                                                .font(.custom("ShantellSans-SemiBold", size: 18))
+                                                .foregroundColor(Color(hex: 0x483528))
+                                                .multilineTextAlignment(.trailing)
+                                                .frame(maxWidth: 120)
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+                                        .padding(.trailing, 40)
+                                    }
+                                }
+                                .frame(width: 350)
+                            }
                         }
                         Spacer()
                         Text("Tap the letter to open!")
                             .font(.custom("ShantellSans-ExtraBold", size: 18))
                             .foregroundColor(Color(hex: 0x483528))
                             .multilineTextAlignment(.center)
+                            .padding(.bottom, 30)
                     }
                 }
             }
