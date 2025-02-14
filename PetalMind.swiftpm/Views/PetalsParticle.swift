@@ -74,7 +74,7 @@ struct PetalParticleView: View {
             .offset(offset)
             .opacity(opacity)
             .onAppear {
-                withAnimation(.easeOut(duration: CGFloat.random(in: 1...3))) {
+                withAnimation(.easeOut(duration: CGFloat.random(in: 0.3...3))) {
                     offset = CGSize(width: particle.endPoint.x, height: particle.endPoint.y)
                     opacity = 0
                 }

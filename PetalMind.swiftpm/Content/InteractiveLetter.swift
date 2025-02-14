@@ -87,6 +87,15 @@ struct InteractiveLetter: View {
                             }
                             .padding(10)
                         }
+                        .onChange(of: dayManager.isDayOver) { newValue in
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
+                                if (dayManager.isDayOver) {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        pageViewModel.onResulted = true
+                                    }
+                                }
+                            }
+                        }
                     }
                 } else {
                     SelectionResult(behaviorIsPositive: pageViewModel.behaviorIsPositive)
@@ -117,7 +126,7 @@ struct InteractiveLetter: View {
                         }
                     }
             }
-            if (pageViewModel.onResulted) {
+            else if (pageViewModel.onResulted) {
                 ResultedView(currentPage: resultViewModelContent.currentPage)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .background(.black.opacity(0.5))
@@ -305,15 +314,17 @@ struct ResultedView: View {
             
             VStack(spacing: 0) {
                 
+                Spacer()
+                
                 switch currentPage {
                 case 0:
                     ResultViewContent1()
                 case 1:
-                    GuideViewContent2()
+                    ResultViewContent2()
                 case 2:
-                    GuideViewContent3()
+                    ResultViewContent3()
                 default:
-                    GuideViewContent1()
+                    ResultViewContent1()
                 }
                 
                 Spacer()
@@ -333,4 +344,5 @@ struct ResultedView: View {
         .environmentObject(InteractiveModel())
         .environmentObject(PageViewModel())
         .environmentObject(GuideViewContentModel())
+        .environmentObject(ResultViewModelContent())
 }
