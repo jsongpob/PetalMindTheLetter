@@ -23,8 +23,11 @@ struct LetterView: View {
             EnteringStory()
         } else if (pageViewModel.onTypeOfHelp) {
             TypeOfHelpView()
-        }
-        else {
+        } else if (pageViewModel.onSummary) {
+            SummaryView()
+        } else if (pageViewModel.onEnd) {
+            EndView()
+        } else {
             Text("Conclusion")
         }
     }

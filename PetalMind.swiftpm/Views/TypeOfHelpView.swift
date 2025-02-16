@@ -11,6 +11,7 @@ struct TypeOfHelpView: View {
     @EnvironmentObject var photoModel: PhotoModel
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var stressManager: StressManager
+    @EnvironmentObject var pageViewModel: PageViewModel
     
     var body: some View {
         ZStack {
@@ -23,35 +24,11 @@ struct TypeOfHelpView: View {
             
             VStack {
                 VStack(spacing: 0) {
-                    ZStack {
-                        Image("letterOfHelped")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(30)
-                        
-                        VStack(spacing: 40) {
-                            
-                            switch stressManager.checkStressLevelType {
-                            case "Type1":
-                                SunflowerType()
-                            case "Type2":
-                                LotusType()
-                            case "Type3":
-                                OrchidType()
-                            default:
-                                SunflowerType()
-                            }
-                            
-                            if let image = photoModel.image {
-                                UserCradit(userImage: image, userName: userModel.nameOfUser)
-                            } else {
-                                PlaceholderUserCradit()
-                            }
-                        }
-                    }
+                    
+                    TypeView(stressManager: stressManager, userModel: userModel, photoModel: photoModel)
                     
                     Button {
-                        print("ddd")
+                        saveThePhotoOfType()
                     } label: {
                         Text("Save this photo")
                             .font(.custom("ShantellSans-Medium", size: 16))
@@ -62,7 +39,9 @@ struct TypeOfHelpView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 Button {
-                    print("ddd")
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        pageViewModel.nextToSummary()
+                    }
                 } label: {
                     ZStack {
                         Image("MainButton")
@@ -80,6 +59,20 @@ struct TypeOfHelpView: View {
             .padding(.bottom, 30)
         }
         .background(.black)
+    }
+    
+    func saveThePhotoOfType() {
+        let typeViewInstance = TypeView(stressManager: stressManager, userModel: userModel, photoModel: photoModel)
+            .frame(width: 500, height: 500)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .background(Image("letterPaperTexture"))
+
+        let renderer = ImageRenderer(content: typeViewInstance)
+        renderer.scale = UIScreen.main.scale
+
+        if let image = renderer.uiImage {
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        }
     }
 }
 
@@ -181,7 +174,44 @@ struct OrchidType: View {
     }
 }
 
+struct TypeView: View {
+    let stressManager: StressManager
+    let userModel: UserModel
+    let photoModel: PhotoModel
+    
+    var body: some View {
+            ZStack {
+                Image("letterOfHelped")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(30)
+                
+                VStack(spacing: 40) {
+                    
+                    switch stressManager.checkStressLevelType {
+                    case "Type1":
+                        SunflowerType()
+                    case "Type2":
+                        LotusType()
+                    case "Type3":
+                        OrchidType()
+                    default:
+                        SunflowerType()
+                    }
+                    
+                    if let image = photoModel.image {
+                        UserCradit(userImage: image, userName: userModel.nameOfUser)
+                    } else {
+                        PlaceholderUserCradit()
+                    }
+                }
+            }
+    }
+}
+
 #Preview {
     TypeOfHelpView()
         .environmentObject(PhotoModel())
+        .environmentObject(UserModel())
+        .environmentObject(StressManager())
 }

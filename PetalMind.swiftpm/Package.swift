@@ -32,6 +32,10 @@ let package = Package(
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
+            capabilities: [
+                .photoLibrary(purposeString: "Please press Allow to select and save images to continue the story"),
+                .camera(purposeString: "Please press Allow to take a photo for receive letters verification")
+            ],
             appCategory: .education
         )
     ],

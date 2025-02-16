@@ -24,6 +24,8 @@ class PageViewModel: ObservableObject {
     @Published var onConclusion: Bool = false
     @Published var onResulted: Bool = false
     @Published var onTypeOfHelp: Bool = false
+    @Published var onSummary: Bool = false
+    @Published var onEnd: Bool = false
     
     @Published var onSelectionResult: Bool = false
     @Published var behaviorIsPositive: Bool = false
@@ -79,6 +81,17 @@ class PageViewModel: ObservableObject {
         onInteractive = false
     }
     
+    func nextToSummary() {
+        onSummary = true
+        onTypeOfHelp = false
+        onEnd = false
+    }
+    
+    func nextToEnd() {
+        onSummary = false
+        onEnd = true
+    }
+    
     func showSelectionResult(for behavior: Behavior) {
         if behavior.increase {
             behaviorIsPositive = false
@@ -98,9 +111,11 @@ class PageViewModel: ObservableObject {
     func resetValue() {
         displayAbout = false
         displayLetter = false
+        
         introductionIsEnd = false
         interactiveIsEnd = false
         conclusionIsEnd = false
+        
         onIntroduction = false
         onReceive = false
         onEnterName = false
@@ -108,7 +123,12 @@ class PageViewModel: ObservableObject {
         onInteractive = false
         onConclusion = false
         onSelectionResult = false
+        
         behaviorIsPositive = false
         onInteractiveGuide = false
+        
+        onTypeOfHelp = false
+        onEnd = false
+        onSummary = false
     }
 }

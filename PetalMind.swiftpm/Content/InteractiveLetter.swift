@@ -16,6 +16,8 @@ struct InteractiveLetter: View {
     @EnvironmentObject var stressManager: StressManager
     @StateObject var dayManager = DayManager()
     @StateObject var brainManager = BrainManager()
+    @State var displayRandomFact: Bool = false
+    @State var remainingToShowFact: Int = 3
     
     let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 2)
 
@@ -64,6 +66,7 @@ struct InteractiveLetter: View {
                                             dayManager.incrementDay()
                                             pageViewModel.showSelectionResult(for: behavior)
                                             brainManager.updateBrainState(stressLevel: stressManager.stressLevel)
+                                            remainingToShowFact -= 1
                                             
                                         } else {
                                             print("cannot increment day because dayManager.currentDay (\(dayManager.currentDay)) is less than or equal to dayManager.maxDays (\(dayManager.maxDays))")
@@ -84,6 +87,11 @@ struct InteractiveLetter: View {
                             }
                             .onAppear {
                                 interactiveModel.randomizeBehaviors()
+                                if (remainingToShowFact == 0) {
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        displayRandomFact = true
+                                    }
+                                }
                             }
                             .padding(10)
                         }
@@ -139,6 +147,15 @@ struct InteractiveLetter: View {
                                 pageViewModel.onResulted = false
                                 pageViewModel.nextToTypeOfHelp()
                             }
+                        }
+                    }
+            } else if (displayRandomFact) {
+                LetterFactRandomView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .background(.black.opacity(0.5))
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            displayRandomFact = false
                         }
                     }
             }
@@ -362,6 +379,29 @@ struct ResultedView: View {
                     .frame(width: 40, height: 40)
             }
             .frame(maxWidth: .infinity, maxHeight: 650, alignment: .center)
+        }
+    }
+}
+
+struct LetterFactRandomView: View {
+    @State var random: Int = Int.random(in: 1...3)
+    
+    var body: some View {
+        ZStack {
+            Image("letterOfHelped")
+                .resizable()
+                .scaledToFit()
+            
+            switch random {
+            case 1:
+                LetterFact1()
+            case 2:
+                LetterFact2()
+            case 3:
+                LetterFact3()
+            default:
+                LetterFact1()
+            }
         }
     }
 }
