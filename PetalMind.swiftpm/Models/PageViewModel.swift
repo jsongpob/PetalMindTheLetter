@@ -23,6 +23,7 @@ class PageViewModel: ObservableObject {
     @Published var onInteractive: Bool = false
     @Published var onConclusion: Bool = false
     @Published var onResulted: Bool = false
+    @Published var onTypeOfHelp: Bool = false
     
     @Published var onSelectionResult: Bool = false
     @Published var behaviorIsPositive: Bool = false
@@ -71,6 +72,11 @@ class PageViewModel: ObservableObject {
         onConclusion = false
         onEnterName = false
         onUserReceived = false
+    }
+    
+    func nextToTypeOfHelp() {
+        onTypeOfHelp = true
+        onInteractive = false
     }
     
     func showSelectionResult(for behavior: Behavior) {

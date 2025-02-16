@@ -85,6 +85,7 @@ class InteractiveModel: ObservableObject {
 class StressManager: ObservableObject {
     @Published var stressLevel: Double = 50.0
     @Published var maxStressLevel: Double = 100.0
+    @Published var checkStressLevelType: String = "Type1"
 
     func updateStressLevel(for behavior: Behavior) {
         if behavior.increase {
@@ -94,6 +95,23 @@ class StressManager: ObservableObject {
         }
         // Prevent stress level from dropping below 0
         stressLevel = min(max(stressLevel, 0), 100)
+    }
+    
+    public func updateType(stressLevel: Double) {
+        let newType = changeStressLevelType(stressLevel: stressLevel)
+        checkStressLevelType = newType
+        
+        print("change type to \(checkStressLevelType) current stress level is \(stressLevel)")
+    }
+    
+    func changeStressLevelType(stressLevel: Double) -> String {
+        if (stressLevel < 20) {
+            return "Type1"
+        } else if (stressLevel >= 20 && stressLevel <= 60) {
+            return "Type2"
+        } else {
+            return "Type3"
+        }
     }
 }
 

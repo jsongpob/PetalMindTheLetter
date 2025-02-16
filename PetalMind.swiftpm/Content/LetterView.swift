@@ -21,7 +21,10 @@ struct LetterView: View {
             UserEnteringNameView()
         } else if (pageViewModel.onIntroduction) {
             EnteringStory()
-        } else {
+        } else if (pageViewModel.onTypeOfHelp) {
+            TypeOfHelpView()
+        }
+        else {
             Text("Conclusion")
         }
     }

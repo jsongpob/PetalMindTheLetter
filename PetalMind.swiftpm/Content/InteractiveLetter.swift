@@ -13,7 +13,7 @@ struct InteractiveLetter: View {
     @EnvironmentObject var interactiveModel: InteractiveModel
     @EnvironmentObject var guideViewContentModel: GuideViewContentModel
     @EnvironmentObject var resultViewModelContent: ResultViewModelContent
-    @StateObject var stressManager = StressManager()
+    @EnvironmentObject var stressManager: StressManager
     @StateObject var dayManager = DayManager()
     @StateObject var brainManager = BrainManager()
     
@@ -127,7 +127,7 @@ struct InteractiveLetter: View {
                     }
             }
             else if (pageViewModel.onResulted) {
-                ResultedView(currentPage: resultViewModelContent.currentPage)
+                ResultedView(currentPage: resultViewModelContent.currentPage, currentStress: stressManager.stressLevel)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .background(.black.opacity(0.5))
                     .onTapGesture {
@@ -135,7 +135,9 @@ struct InteractiveLetter: View {
                             if resultViewModelContent.currentPage < resultViewModelContent.pages.count - 1 {
                                 resultViewModelContent.nextPage()
                             } else {
+                                stressManager.updateType(stressLevel: stressManager.stressLevel)
                                 pageViewModel.onResulted = false
+                                pageViewModel.nextToTypeOfHelp()
                             }
                         }
                     }
@@ -306,6 +308,7 @@ struct GuideView: View {
 
 struct ResultedView: View {
     let currentPage: Int
+    let currentStress: Double
     
     var body: some View {
         ZStack {
@@ -316,15 +319,39 @@ struct ResultedView: View {
                 
                 Spacer()
                 
-                switch currentPage {
-                case 0:
-                    ResultViewContent1()
-                case 1:
-                    ResultViewContent2()
-                case 2:
-                    ResultViewContent3()
-                default:
-                    ResultViewContent1()
+                if (currentStress <= 20){
+                    switch currentPage {
+                    case 0:
+                        ResultViewContent1()
+                    case 1:
+                        ResultViewContent2()
+                    case 2:
+                        ResultViewContent3()
+                    default:
+                        ResultViewContent1()
+                    }
+                } else if (currentStress >= 20 && currentStress <= 60) {
+                    switch currentPage {
+                    case 0:
+                        ResultViewContentWell1()
+                    case 1:
+                        ResultViewContentWell2()
+                    case 2:
+                        ResultViewContent3()
+                    default:
+                        ResultViewContentWell1()
+                    }
+                } else {
+                    switch currentPage {
+                    case 0:
+                        ResultViewContentBad1()
+                    case 1:
+                        ResultViewContentBad2()
+                    case 2:
+                        ResultViewContent3()
+                    default:
+                        ResultViewContentBad1()
+                    }
                 }
                 
                 Spacer()

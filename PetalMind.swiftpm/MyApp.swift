@@ -10,6 +10,7 @@ struct MyApp: App {
     @StateObject private var photoModel = PhotoModel()
     @StateObject private var userModel = UserModel()
     @StateObject private var resultViewModelContent = ResultViewModelContent()
+    @StateObject private var stressManager = StressManager()
     
     var body: some Scene {
         WindowGroup {
@@ -21,6 +22,7 @@ struct MyApp: App {
                 .environmentObject(photoModel)
                 .environmentObject(userModel)
                 .environmentObject(resultViewModelContent)
+                .environmentObject(stressManager)
         }
     }
 }

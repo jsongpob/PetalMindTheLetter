@@ -75,6 +75,7 @@ struct EnteringNameView: View {
                     .font(.custom("ShantellSans-SemiBold", size: 48))
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
+                    .autocorrectionDisabled()
             }
         }
     }
