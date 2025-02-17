@@ -183,7 +183,7 @@ struct LetterFact1: View {
             }
             .padding(.bottom, 20)
             
-            Text("Tap to continue")
+            Text("Tap to close")
                 .font(.custom("ShantellSans-ExtraBold", size: 16))
                 .foregroundColor(Color(hex: 0x483528))
         }
@@ -227,7 +227,7 @@ struct LetterFact2: View {
             }
             .padding(.bottom, 20)
             
-            Text("Tap to continue")
+            Text("Tap to close")
                 .font(.custom("ShantellSans-ExtraBold", size: 16))
                 .foregroundColor(Color(hex: 0x483528))
         }
@@ -272,7 +272,7 @@ struct LetterFact3: View {
             .multilineTextAlignment(.center)
             .padding(.bottom, 20)
             
-            Text("Tap to continue")
+            Text("Tap to close")
                 .font(.custom("ShantellSans-ExtraBold", size: 16))
                 .foregroundColor(Color(hex: 0x483528))
         }

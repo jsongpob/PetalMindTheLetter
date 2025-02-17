@@ -4,6 +4,8 @@
 //
 //  Created by Songpob Hamthanan on 13/2/2568 BE.
 //
+//  Inspired code by https://youtu.be/KvPh0ght90Q?si=Zbzqd8Y4VcUhRTSt
+//
 
 import SwiftUI
 
@@ -31,9 +33,8 @@ struct PetalsView: View {
     }
 
     public func startPetalsParticle(isPositive: Bool) {
-//        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                let centerPoint = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2) // Center of screen
+                let centerPoint = CGPoint(x: frameSize.width / 2, y: frameSize.height / 2)
                 let newBurst = PetalsBurst(center: centerPoint, isPositive: isPositive)
                 bursts.append(newBurst)
 
@@ -42,7 +43,6 @@ struct PetalsView: View {
                     bursts.removeAll(where: { $0.id == newBurst.id })
                 }
             }
-//        }
     }
 }
 
@@ -69,7 +69,7 @@ struct PetalParticleView: View {
         Image(particle.imageName) // Use custom image
             .resizable()
             .scaledToFit()
-            .frame(width: CGFloat.random(in: 40...100), height: CGFloat.random(in: 40...100)) // Adjust size
+            .frame(width: CGFloat.random(in: 40...100), height: CGFloat.random(in: 40...100))
             .position(center)
             .offset(offset)
             .opacity(opacity)

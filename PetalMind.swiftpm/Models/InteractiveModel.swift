@@ -74,11 +74,10 @@ class InteractiveModel: ObservableObject {
     
     // Randomize the behaviors
     func randomizeBehaviors() {
-        let randomGood = goodBehaviors.shuffled().prefix(3) // Take 3 random good behaviors
-        let randomBad = badBehaviors.shuffled().prefix(3) // Take 3 random bad behaviors
+        let randomGood = goodBehaviors.shuffled().prefix(3)
+        let randomBad = badBehaviors.shuffled().prefix(3)
         
-        // Combine the selected behaviors
-        randomizedBehaviors = Array(randomGood + randomBad).shuffled() // Shuffle them together
+        randomizedBehaviors = Array(randomGood + randomBad).shuffled()
     }
 }
 
@@ -93,7 +92,7 @@ class StressManager: ObservableObject {
         } else {
             stressLevel -= behavior.stressLevel
         }
-        // Prevent stress level from dropping below 0
+
         stressLevel = min(max(stressLevel, 0), 100)
     }
     

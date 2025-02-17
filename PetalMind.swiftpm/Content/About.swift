@@ -61,7 +61,7 @@ struct About: View {
                                     isShowReferences = true
                                 }
                             } label: {
-                                Text("References")
+                                Text("View the referenced content")
                                     .underline()
                             }
                             .padding(.bottom, 20)
