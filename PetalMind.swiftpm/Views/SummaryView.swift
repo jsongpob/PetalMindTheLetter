@@ -35,7 +35,7 @@ struct SummaryView: View {
                         }
                     } label: {
                         ZStack {
-                            Image("theMailLetter")
+                            Image("theMailLetter2")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 180, alignment: .center)
@@ -49,7 +49,7 @@ struct SummaryView: View {
                         }
                     } label: {
                         ZStack {
-                            Image("theMailLetter")
+                            Image("theMailLetter2")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 180, alignment: .center)
@@ -63,7 +63,7 @@ struct SummaryView: View {
                         }
                     } label: {
                         ZStack {
-                            Image("theMailLetter")
+                            Image("theMailLetter2")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 180, alignment: .center)

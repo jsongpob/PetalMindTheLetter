@@ -10,6 +10,7 @@ import SwiftUI
 struct About: View {
     
     @EnvironmentObject var pageViewModel: PageViewModel
+    @State var isShowReferences: Bool = false
     
     var body: some View {
         ZStack {
@@ -27,16 +28,53 @@ struct About: View {
                         .resizable()
                         .scaledToFit()
                         .padding(20)
-                        .padding(.bottom, 50)
-                    Group {
-                        Text("This project was create by Songpob Hamthanan \nas a submission to the \nSwift Student Challenge 2025")
+                    
+                    VStack(spacing: 30) {
+                        Text("About this project")
+                            .font(.custom("ShantellSans-ExtraBold", size: 24))
+                        
+                        VStack(spacing: 0) {
+                            Text("This project was create by\n") +
+                            Text("Songpob Hamthanan")
+                                .font(.custom("ShantellSans-Bold", size: 18))
+                            Text(" \nas a submission to the \nSwift Student Challenge 2025")
+                        }
+                        .font(.custom("ShantellSans-SemiBold", size: 16))
+                        
+                        Divider()
+                            .frame(minHeight: 1)
+                            .background(Color(hex: 0x483528))
+                            .padding(.horizontal, 80)
+                            .padding(.vertical, 0)
+                        
+                        VStack(spacing: 0) {
+                            VStack(spacing: 20) {
+                                Text("Font: Shantell Sans \nby www.shantellsans.com")
+                                Text("All assets were created by me, \nillustrations drawn on Procreate \nand UI designed in Figma")
+                                Text("Emojis were generated using \nGenmoji by Apple Intelligence")
+                            }
+                            
+                            Spacer()
+                            
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    isShowReferences = true
+                                }
+                            } label: {
+                                Text("References")
+                                    .underline()
+                            }
+                            .padding(.bottom, 20)
+                        }
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                     .font(.custom("ShantellSans-SemiBold", size: 16))
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 15)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                
+                Spacer()
                 
                 //Buttom Button
                 Button {
@@ -50,7 +88,63 @@ struct About: View {
                         .frame(width: 48, alignment: .center)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        }
+        .overlay {
+            if (isShowReferences) {
+                ReferencesView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .background(.black.opacity(0.5))
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            isShowReferences = false
+                        }
+                    }
+            }
         }
     }
+}
+
+struct ReferencesView: View {
+    var body: some View {
+        ZStack {
+            Image("overlayPaper")
+                .resizable()
+                .scaledToFit()
+            
+            VStack(spacing: 40) {
+                Text("Thank you for the \nreferenced content from...")
+                    .font(.custom("ShantellSans-ExtraBold", size: 18))
+                    .multilineTextAlignment(.center)
+                
+                VStack(spacing: 20) {
+                    Link(destination: URL(string: "https://www.naluri.life/news-and-reports/2024-employee-mental-health-asia-report")!, label: {
+                        Text("Naluri, \n2024 employee mental health \nasia report")
+                            .underline()
+                    })
+                    Link(destination: URL(string: "https://www.weforum.org/stories/2021/03/gen-z-unemployment-chart-global-comparisons/")!, label: {
+                        Text("World Economic Forum, \ngen z unemployment")
+                            .underline()
+                    })
+                    Link(destination: URL(string: "https://spacebar.th/world/1-in-7-southeast-asia-live-with-mental-health-condition")!, label: {
+                        Text("Spacebar, \n1 in 7 southeast asia live \nwith mental health")
+                            .underline()
+                    })
+                    Link(destination: URL(string: "https://www.who.int/news-room/fact-sheets/detail/mental-health-strengthening-our-response")!, label: {
+                        Text("World Health Organization, \nMental health")
+                            .underline()
+                    })
+                }
+                .multilineTextAlignment(.leading)
+                .underline()
+            }
+            .font(.custom("ShantellSans-Medium", size: 16))
+            .foregroundColor(Color(hex: 0x483528))
+        }
+    }
+}
+
+#Preview {
+    About()
+        .environmentObject(PageViewModel())
 }

@@ -83,5 +83,6 @@ struct Home: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             }
         }
+        .preferredColorScheme(.light)
     }
 }
