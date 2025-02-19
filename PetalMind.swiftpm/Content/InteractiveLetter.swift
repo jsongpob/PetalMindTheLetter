@@ -54,6 +54,10 @@ struct InteractiveLetter: View {
                                 .font(.custom("ShantellSans-ExtraBold", size: 24))
                                 .foregroundColor(Color(hex: 0x483528))
                                 .multilineTextAlignment(.center)
+                            Text("choose one item")
+                                .font(.custom("ShantellSans-Medium", size: 16))
+                                .foregroundColor(Color(hex: 0x483528))
+                                .multilineTextAlignment(.center)
                             
                             LazyVGrid(columns: columns, spacing: 5) {
                                 
@@ -62,11 +66,13 @@ struct InteractiveLetter: View {
                                     Button {
                                         if (dayManager.currentDay <= dayManager.maxDays && !dayManager.isDayOver) {
                                             
-                                            stressManager.updateStressLevel(for: behavior)
-                                            dayManager.incrementDay()
-                                            pageViewModel.showSelectionResult(for: behavior)
-                                            brainManager.updateBrainState(stressLevel: stressManager.stressLevel)
-                                            remainingToShowFact -= 1
+                                            if (!pageViewModel.onSelectionResult) {
+                                                stressManager.updateStressLevel(for: behavior)
+                                                dayManager.incrementDay()
+                                                pageViewModel.showSelectionResult(for: behavior)
+                                                brainManager.updateBrainState(stressLevel: stressManager.stressLevel)
+                                                remainingToShowFact -= 1
+                                            }
                                             
                                         } else {
                                             print("cannot increment day because dayManager.currentDay (\(dayManager.currentDay)) is less than or equal to dayManager.maxDays (\(dayManager.maxDays))")
@@ -112,6 +118,15 @@ struct InteractiveLetter: View {
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     pageViewModel.onSelectionResult = false
                                     pageViewModel.showPetalParticle = false
+                                }
+                            }
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                                if (pageViewModel.onSelectionResult) {
+                                    withAnimation(.easeInOut(duration: 0.5)) {
+                                        pageViewModel.onSelectionResult = false
+                                        pageViewModel.showPetalParticle = false
+                                    }
                                 }
                             }
                         }

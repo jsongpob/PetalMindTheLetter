@@ -11,6 +11,10 @@ struct SummaryView: View {
     @EnvironmentObject var pageViewModel: PageViewModel
     @State private var selectedLetter: SelectedLetter = .none
     @State var isDisplay: Bool = false
+    @State var readMail1: Bool = false
+    @State var readMail2: Bool = false
+    @State var readMail3: Bool = false
+    @State var isDisplayMoreMail: Bool = false
     
     var body: some View {
         ZStack {
@@ -32,6 +36,7 @@ struct SummaryView: View {
                         selectedLetter = .letter1
                         withAnimation(.easeInOut(duration: 0.25)) {
                             isDisplay = true
+                            readMail1 = true
                         }
                     } label: {
                         ZStack {
@@ -39,6 +44,7 @@ struct SummaryView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 180, alignment: .center)
+                                .opacity(readMail1 ? 0.6 : 1.0)
                         }
                     }
                     
@@ -46,6 +52,7 @@ struct SummaryView: View {
                         selectedLetter = .letter2
                         withAnimation(.easeInOut(duration: 0.25)) {
                             isDisplay = true
+                            readMail2 = true
                         }
                     } label: {
                         ZStack {
@@ -53,6 +60,7 @@ struct SummaryView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 180, alignment: .center)
+                                .opacity(readMail2 ? 0.6 : 1.0)
                         }
                     }
                     
@@ -60,6 +68,7 @@ struct SummaryView: View {
                         selectedLetter = .letter3
                         withAnimation(.easeInOut(duration: 0.25)) {
                             isDisplay = true
+                            readMail3 = true
                         }
                     } label: {
                         ZStack {
@@ -67,6 +76,7 @@ struct SummaryView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 180, alignment: .center)
+                                .opacity(readMail3 ? 0.6 : 1.0)
                         }
                     }
                 }
@@ -79,6 +89,7 @@ struct SummaryView: View {
                     Button {
                         withAnimation(.easeInOut(duration: 1.0)) {
                             pageViewModel.nextToEnd()
+                            resetAllReadMail()
                         }
                     } label: {
                         ZStack {
@@ -97,16 +108,44 @@ struct SummaryView: View {
         }
         .overlay {
             if (isDisplay) {
-                LetterFactView(selectedLetter: selectedLetter)
+                VStack {
+                    LetterFactView(selectedLetter: selectedLetter)
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            isDisplayMoreMail = true
+                        }
+                    } label : {
+                        MoreLetterButton()
+                    }
+                }
+                .onTapGesture {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        isDisplay = false
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .background(.black.opacity(0.5))
+                
+                if (isDisplayMoreMail) {
+                    VStack {
+                        LetterMore()
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                    .background(.black.opacity(0.5))
+                    .background(.black.opacity(0.6))
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.25)) {
-                            isDisplay = false
+                            isDisplayMoreMail = false
                         }
                     }
+                }
             }
         }
+    }
+    
+    func resetAllReadMail() {
+        readMail1 = false
+        readMail2 = false
+        readMail3 = false
     }
 }
 
@@ -279,6 +318,77 @@ struct LetterFact3: View {
     }
 }
 
+struct MoreLetterButton: View {
+    var body: some View {
+        ZStack {
+            Image("letterMoreInformation")
+                .resizable()
+                .scaledToFit()
+                .padding(.horizontal, 70)
+            
+            HStack(spacing: 10) {
+                Image("MailIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
+                Text("What happens if \nmental health issues arise?")
+                    .font(.custom("ShantellSans-ExtraBold", size: 13))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.leading)
+            }
+            .padding(.top, 15)
+        }
+    }
+}
+
+struct LetterMore: View {
+    var body: some View {
+        ZStack {
+            Image("letterOfHelpedLong")
+                .resizable()
+                .scaledToFit()
+            
+            VStack(spacing: 20) {
+                Text("What happens if \nmental health issues arise?")
+                    .font(.custom("ShantellSans-ExtraBold", size: 20))
+                    .foregroundColor(Color(hex: 0x483528))
+                Text("You may have a chance of having \na mental health disorder such as")
+                    .font(.custom("ShantellSans-Medium", size: 16))
+                    .foregroundColor(Color(hex: 0x483528))
+                Text("Anxiety Disorders, Mood Disorders, \nEating Disorders or Personality \nDisorders, etc.")
+                    .font(.custom("ShantellSans-Bold", size: 16))
+                    .foregroundColor(Color(hex: 0x483528))
+
+                Divider()
+                    .frame(minHeight: 0.5)
+                    .background(Color(hex: 0x483528))
+                    .padding(.horizontal, 80)
+                    .padding(.vertical, 2)
+                
+                Text("Treatment sessions can cost up to \n$100 an hour, or")
+                    .font(.custom("ShantellSans-Medium", size: 16))
+                    .foregroundColor(Color(hex: 0x483528))
+                
+                VStack(spacing: 10) {
+                    Text("30-day treatment programs \ncan cost around")
+                        .font(.custom("ShantellSans-Bold", size: 16))
+                        .foregroundColor(Color(hex: 0x483528))
+                    Text("$10,000")
+                        .font(.custom("ShantellSans-Bold", size: 48))
+                        .foregroundColor(Color(hex: 0xF28F46))
+                }
+                
+                Text("Tap to close")
+                    .font(.custom("ShantellSans-ExtraBold", size: 16))
+                    .foregroundColor(Color(hex: 0x483528))
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .multilineTextAlignment(.center)
+        }
+    }
+}
+
 #Preview {
-    LetterFactView(selectedLetter: .letter3)
+    SummaryView()
+        .environmentObject(PageViewModel())
 }

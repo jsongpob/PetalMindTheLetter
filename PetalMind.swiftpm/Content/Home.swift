@@ -15,6 +15,7 @@ struct Home: View {
     @EnvironmentObject var pageViewModel: PageViewModel
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var photoModel: PhotoModel
+    @StateObject var customMusic = CustomMusic()
     
     var body: some View {
         ZStack {
@@ -34,11 +35,11 @@ struct Home: View {
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
-                        .padding(20)
+                        .padding(50)
                         .padding(.bottom, 100)
                     
                     VStack(spacing: 0) {
-                        Text("You got a new letter, open it!")
+                        Text("Hi, you got a new letter \nOpen it!")
                             .font(.custom("ShantellSans-SemiBold", size: 20))
                             .foregroundColor(Color(hex: 0x483528))
                             .multilineTextAlignment(.center)
@@ -67,21 +68,37 @@ struct Home: View {
                         }
                     }
                     //Buttom Button
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            pageViewModel.displayAbout.toggle()
+                    HStack {
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                pageViewModel.displayAbout.toggle()
+                            }
+                        } label: {
+                            Image("QuestionIcon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 48, alignment: .center)
                         }
-                    } label: {
-                        Image("QuestionIcon")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 48, alignment: .center)
+                        .buttonStyle(.plain)
+                        .padding(.top, 200)
+                        
+                        Button {
+                            customMusic.playOrPause()
+                        } label: {
+                            Image("SpeakerIcon")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 48, alignment: .center)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.top, 200)
                     }
-                    .buttonStyle(.plain)
-                    .padding(.top, 200)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
             }
+        }
+        .onAppear {
+            customMusic.playOrPause()
         }
         .preferredColorScheme(.light)
     }

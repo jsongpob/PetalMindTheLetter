@@ -43,7 +43,7 @@ struct UserEnteringNameView: View {
                                     .scaledToFit()
                                     .frame(width: 290, alignment: .center)
                                 HStack(spacing: 5) {
-                                    Text("Receive")
+                                    Text("Next")
                                         .font(.custom("ShantellSans-Extrabold", size: 22))
                                         .foregroundColor(Color(hex: 0x483528))
                                         .multilineTextAlignment(.center)
@@ -67,7 +67,7 @@ struct EnteringNameView: View {
         VStack(spacing: 20) {
             VStack {
                 Spacer()
-                Text("Please enter your name...")
+                Text("Please enter your nickname...")
                     .font(.custom("ShantellSans-SemiBold", size: 22))
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
@@ -86,6 +86,7 @@ struct UserReceiveView: View {
     @EnvironmentObject var photoModel: PhotoModel
     @EnvironmentObject var userModel: UserModel
     @State var isReceiving: Bool = true
+    @State var scaleSizeMail: CGFloat = 0.8
     
     var body: some View {
         VStack {
@@ -98,10 +99,17 @@ struct UserReceiveView: View {
                             .clipShape(Circle())
                             .frame(width: 180, height: 180)
                     }
-                    Text("Receiving letters...")
-                        .font(.custom("ShantellSans-SemiBold", size: 22))
-                        .foregroundColor(Color(hex: 0x483528))
-                        .multilineTextAlignment(.center)
+                    VStack(spacing: 5) {
+                        Text("from someone to \(userModel.nameOfUser)")
+                            .font(.custom("ShantellSans-SemiBold", size: 24))
+                            .foregroundColor(Color(hex: 0x483528))
+                            .multilineTextAlignment(.center)
+                        
+                        Text("Receiving letters...")
+                            .font(.custom("ShantellSans-SemiBold", size: 16))
+                            .foregroundColor(Color(hex: 0x483528))
+                            .multilineTextAlignment(.center)
+                    }
                 }
             } else {
                 Group {
@@ -109,37 +117,54 @@ struct UserReceiveView: View {
                         Spacer()
                         VStack {
                             VStack(spacing: 0) {
-                                Text("This letter was sent to you by \nthe sender... from the future")
-                                    .font(.custom("ShantellSans-SemiBold", size: 18))
-                                    .foregroundColor(Color(hex: 0x483528))
-                                    .multilineTextAlignment(.center)
-                                ZStack {
-                                    Image("theMailLetter")
-                                        .resizable()
-                                        .scaledToFit()
-                                    VStack(spacing: 65) {
-                                        HStack {
-                                            Text("To... \(userModel.nameOfUser)")
-                                                .font(.custom("ShantellSans-SemiBold", size: 22))
-                                                .foregroundColor(Color(hex: 0x483528))
-                                                .multilineTextAlignment(.leading)
+                                VStack(spacing: 10) {
+                                    Text("This letter was sent to you by \nthe sender... from the ")
+                                        .font(.custom("ShantellSans-SemiBold", size: 18))
+                                        .foregroundColor(Color(hex: 0x483528)) +
+                                    Text("future")
+                                        .font(.custom("ShantellSans-ExtraBold", size: 18))
+                                        .foregroundColor(Color(hex: 0x483528))
+                                    Text("(10 years from now)")
+                                        .font(.custom("ShantellSans-Medium", size: 16))
+                                        .foregroundColor(Color(hex: 0x483528))
+                                }
+                                
+                                    ZStack {
+                                        Image("theMailLetter")
+                                            .resizable()
+                                            .scaledToFit()
+                                        VStack(spacing: 65) {
+                                            HStack {
+                                                Text("To... \(userModel.nameOfUser)")
+                                                    .font(.custom("ShantellSans-SemiBold", size: 22))
+                                                    .foregroundColor(Color(hex: 0x483528))
+                                                    .multilineTextAlignment(.leading)
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .topLeading)
+                                            .padding(.leading, 40)
+                                            .padding(.top, 10)
+                                            
+                                            HStack {
+                                                Text(userModel.futureDate.formatted(date: .long, time: .omitted))
+                                                    .font(.custom("ShantellSans-SemiBold", size: 18))
+                                                    .foregroundColor(Color(hex: 0x483528))
+                                                    .multilineTextAlignment(.trailing)
+                                                    .frame(maxWidth: 120)
+                                            }
+                                            .frame(maxWidth: .infinity, alignment: .bottomTrailing)
+                                            .padding(.trailing, 40)
                                         }
-                                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                                        .padding(.leading, 40)
-                                        .padding(.top, 10)
-                                    
-                                        HStack {
-                                            Text(userModel.futureDate.formatted(date: .long, time: .omitted))
-                                                .font(.custom("ShantellSans-SemiBold", size: 18))
-                                                .foregroundColor(Color(hex: 0x483528))
-                                                .multilineTextAlignment(.trailing)
-                                                .frame(maxWidth: 120)
-                                        }
-                                        .frame(maxWidth: .infinity, alignment: .bottomTrailing)
-                                        .padding(.trailing, 40)
+                                    }
+                                    .scaleEffect(scaleSizeMail)
+                                    .frame(width: 350)
+                            }
+                            .multilineTextAlignment(.center)
+                            .onAppear {
+                                Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                                        changeScaleLetter()
                                     }
                                 }
-                                .frame(width: 350)
                             }
                         }
                         Spacer()
@@ -164,6 +189,18 @@ struct UserReceiveView: View {
                 withAnimation(.easeInOut(duration: 0.5)) {
                     pageViewModel.nextToIntroduction()
                 }
+            }
+        }
+    }
+    
+    private func changeScaleLetter() {
+        withAnimation(.spring(duration: 1.0)) {
+            scaleSizeMail = scaleSizeMail == 0.8 ? 0.9 : 0.8
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            withAnimation(.spring(duration: 1.0)) {
+                scaleSizeMail = scaleSizeMail == 0.8 ? 0.9 : 0.8
             }
         }
     }

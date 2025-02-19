@@ -50,6 +50,7 @@ struct About: View {
                         VStack(spacing: 0) {
                             VStack(spacing: 20) {
                                 Text("Font: Shantell Sans \nby www.shantellsans.com")
+                                Text("Music by Anastasia Chubarova \nfrom www.Pixabay.com")
                                 Text("All assets were created by me, \nillustrations drawn on Procreate \nand UI designed in Figma")
                                 Text("Emojis were generated using \nGenmoji by Apple Intelligence")
                             }
@@ -134,9 +135,17 @@ struct ReferencesView: View {
                         Text("World Health Organization, \nMental health")
                             .underline()
                     })
+                    Link(destination: URL(string: "https://discoverymood.com/blog/cost-of-mental-health-increase")!, label: {
+                        Text("Discovery Mood, \nThe Rising Cost of Mental Health \nand Substance Abuse in \nthe United States")
+                            .underline()
+                    })
                 }
                 .multilineTextAlignment(.leading)
                 .underline()
+                
+                Text("Tap to close")
+                    .font(.custom("ShantellSans-ExtraBold", size: 16))
+                    .foregroundColor(Color(hex: 0x483528))
             }
             .font(.custom("ShantellSans-Medium", size: 16))
             .foregroundColor(Color(hex: 0x483528))

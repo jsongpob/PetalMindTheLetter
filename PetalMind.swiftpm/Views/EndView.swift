@@ -35,7 +35,11 @@ struct EndView: View {
                 Spacer()
                 
                 if (onThanks) {
-                    ThankYouView()
+                    if let image = photoModel.image {
+                        ThankYouView(image: image)
+                    } else {
+                        PlaceholderThankYouView()
+                    }
                 } else {
                     AwarenessView()
                 }
@@ -116,13 +120,36 @@ struct AwarenessView: View {
                 .font(.custom("ShantellSans-Medium", size: 16))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
+            
+            Divider()
+                .frame(minHeight: 0.5)
+                .background(Color(hex: 0x483528))
+                .padding(.horizontal, 80)
+                .padding(.vertical, 20)
+            
+            Text("Otherwise, the person in \nthe letter could be your family, \nyour friends, or even yourself")
+                .font(.custom("ShantellSans-ExtraBold", size: 18))
+                .foregroundColor(Color(hex: 0x483528))
+                .multilineTextAlignment(.center)
         }
     }
 }
 
 struct ThankYouView: View {
+    let image: UIImage
+    
     var body: some View {
         VStack(spacing: 30) {
+            HStack(spacing: 10) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .clipShape(Circle())
+                    .frame(width: 60, height: 60)
+                Text("😊")
+                    .font(.system(size: 55))
+            }
+            
             Text("Thank you for playing!")
                 .font(.custom("ShantellSans-ExtraBold", size: 24))
                 .foregroundColor(Color(hex: 0x483528))
@@ -142,6 +169,71 @@ struct ThankYouView: View {
                 .font(.custom("ShantellSans-ExtraBold", size: 20))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
+            
+            Divider()
+                .frame(minHeight: 0.5)
+                .background(Color(hex: 0x483528))
+                .padding(.horizontal, 80)
+                .padding(.vertical, 10)
+            
+            Text("Just smile for yourself")
+                .font(.custom("ShantellSans-ExtraBold", size: 26))
+                .foregroundColor(Color(hex: 0x483528))
+                .multilineTextAlignment(.center)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+}
+
+struct PlaceholderThankYouView: View {    
+    var body: some View {
+        VStack(spacing: 30) {
+            HStack(spacing: 10) {
+                Circle()
+                    .opacity(0.4)
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: 60, height: 60)
+                Text("😊")
+                    .font(.system(size: 55))
+            }
+            
+            Text("Thank you for playing!")
+                .font(.custom("ShantellSans-ExtraBold", size: 24))
+                .foregroundColor(Color(hex: 0x483528))
+                .multilineTextAlignment(.center)
+            Text("I hope you understand what’s happening \nand that it might help you :)")
+                .font(.custom("ShantellSans-Medium", size: 18))
+                .foregroundColor(Color(hex: 0x483528))
+                .multilineTextAlignment(.center)
+            
+            Divider()
+                .frame(minHeight: 0.5)
+                .background(Color(hex: 0x483528))
+                .padding(.horizontal, 80)
+                .padding(.vertical, 10)
+            
+            Text("With best wishes \nfrom me (the creator)")
+                .font(.custom("ShantellSans-ExtraBold", size: 20))
+                .foregroundColor(Color(hex: 0x483528))
+                .multilineTextAlignment(.center)
+            
+            Divider()
+                .frame(minHeight: 0.5)
+                .background(Color(hex: 0x483528))
+                .padding(.horizontal, 80)
+                .padding(.vertical, 10)
+            
+            Text("Just smile for yourself")
+                .font(.custom("ShantellSans-ExtraBold", size: 26))
+                .foregroundColor(Color(hex: 0x483528))
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+#Preview {
+    EndView()
+        .environmentObject(PhotoModel())
 }

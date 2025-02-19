@@ -46,7 +46,9 @@ struct ReceiveView: View {
                         if (photoModel.image == nil) {
                             photoModel.isConfirming = true
                         } else {
-                            pageViewModel.nextToEnterName()
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                pageViewModel.nextToEnterName()
+                            }
                         }
                     } label: {
                         ZStack {
@@ -91,17 +93,25 @@ struct TakeAPhoto: View {
 
             Spacer()
             
-            VStack(spacing: 20) {
-                Image(uiImage: image)
+            ZStack {
+                Image("theMailLetter")
                     .resizable()
-                    .scaledToFill()
-                    .clipShape(Circle())
-                    .frame(width: 150, height: 150)
+                    .scaledToFit()
+                    .padding(90)
+                    .blur(radius: 10)
                 
-                Text("Take a photo of you \nto receive the letters")
-                    .font(.custom("ShantellSans-SemiBold", size: 22))
-                    .foregroundColor(Color(hex: 0x483528))
-                    .multilineTextAlignment(.center)
+                VStack(spacing: 20) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .clipShape(Circle())
+                        .frame(width: 150, height: 150)
+                    
+                    Text("Take a photo of you \nto receive the letters")
+                        .font(.custom("ShantellSans-SemiBold", size: 22))
+                        .foregroundColor(Color(hex: 0x483528))
+                        .multilineTextAlignment(.center)
+                }
             }
 
             Spacer()
@@ -117,16 +127,24 @@ struct PlaceholderPhoto: View {
 
             Spacer()
         
-            VStack(spacing: 20) {
-                Circle()
-                    .opacity(0.3)
+            ZStack {
+                Image("theMailLetter")
+                    .resizable()
                     .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: 150, height: 150)
-                Text("Take a photo of you \nto receive the letters")
-                    .font(.custom("ShantellSans-SemiBold", size: 22))
-                    .foregroundColor(Color(hex: 0x483528))
-                    .multilineTextAlignment(.center)
+                    .padding(90)
+                    .blur(radius: 10)
+                
+                VStack(spacing: 20) {
+                    Circle()
+                        .opacity(0.4)
+                        .scaledToFit()
+                        .clipShape(Circle())
+                        .frame(width: 150, height: 150)
+                    Text("Take a photo of you \nto receive the letters")
+                        .font(.custom("ShantellSans-SemiBold", size: 22))
+                        .foregroundColor(Color(hex: 0x483528))
+                        .multilineTextAlignment(.center)
+                }
             }
 
             Spacer()

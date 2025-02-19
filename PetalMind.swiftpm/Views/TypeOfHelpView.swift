@@ -12,6 +12,7 @@ struct TypeOfHelpView: View {
     @EnvironmentObject var userModel: UserModel
     @EnvironmentObject var stressManager: StressManager
     @EnvironmentObject var pageViewModel: PageViewModel
+    @State var isSaved: Bool = false
     
     var body: some View {
         ZStack {
@@ -27,14 +28,20 @@ struct TypeOfHelpView: View {
                     
                     TypeView(stressManager: stressManager, userModel: userModel, photoModel: photoModel)
                     
-                    Button {
-                        saveThePhotoOfType()
-                    } label: {
-                        Text("Save this photo")
-                            .font(.custom("ShantellSans-Medium", size: 16))
-                            .foregroundColor(Color(hex: 0x483528))
-                            .underline()
-                    }
+                        VStack {
+                            Button {
+                                saveThePhotoOfType()
+                                isSaved = true
+                            } label: {
+                                Text("Save and share this photo \nwith the people who matter to you")
+                                    .font(.custom("ShantellSans-Medium", size: 16))
+                                    .foregroundColor(Color(hex: 0x483528))
+                                    .underline()
+                                }
+                            }
+                            .alert("The photo has been saved.", isPresented: $isSaved) {
+                                Button("OK", role: .cancel) { }
+                        }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
@@ -62,9 +69,7 @@ struct TypeOfHelpView: View {
     }
     
     func saveThePhotoOfType() {
-        let typeViewInstance = TypeView(stressManager: stressManager, userModel: userModel, photoModel: photoModel)
-            .frame(width: 500, height: 500)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+        let typeViewInstance = SavePhotoView(stressManager: stressManager, userModel: userModel, photoModel: photoModel)
             .background(Image("letterPaperTexture"))
 
         let renderer = ImageRenderer(content: typeViewInstance)
@@ -115,60 +120,105 @@ struct PlaceholderUserCradit: View {
 }
 
 struct SunflowerType: View {
+    let nameofUser: String
+    
     var body: some View {
         VStack(spacing: 20) {
             Image("theSunflower")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
-            Text("You’re Sunflower")
-                .font(.custom("ShantellSans-Extrabold", size: 24))
+            Text("\(nameofUser), \nYou’re Sunflower")
+                .font(.custom("ShantellSans-Extrabold", size: 22))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
             Text("You have helped him perfectly. \nYour support will significantly \nimprove his well-being")
                 .font(.custom("ShantellSans-Medium", size: 16))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
+            
+            VStack(spacing: 15) {
+                Text("Mental health's impact runs deep \nand persists through time")
+                    .font(.custom("ShantellSans-Medium", size: 12))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.center)
+                    .opacity(0.8)
+                Text("Always remember to tend to your \nmental wellbeing, \nas well as that of your loved ones")
+                    .font(.custom("ShantellSans-Medium", size: 12))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.center)
+                    .opacity(0.8)
+            }
         }
-        .padding(.horizontal,70)
+        .padding(.horizontal, 70)
     }
 }
 
 struct LotusType: View {
+    let nameofUser: String
+    
     var body: some View {
         VStack(spacing: 20) {
             Image("theLotus")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
-            Text("You’re Lotus")
-                .font(.custom("ShantellSans-Extrabold", size: 24))
+            Text("\(nameofUser), \nYou’re Lotus")
+                .font(.custom("ShantellSans-Extrabold", size: 22))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
             Text("You can help him, though it \nmight not be perfect, but it's \nstill a good thing!")
                 .font(.custom("ShantellSans-Medium", size: 16))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
+            
+            VStack(spacing: 15) {
+                Text("Mental health's impact runs deep \nand persists through time")
+                    .font(.custom("ShantellSans-Medium", size: 12))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.center)
+                    .opacity(0.8)
+                Text("Always remember to tend to your \nmental wellbeing, \nas well as that of your loved ones")
+                    .font(.custom("ShantellSans-Medium", size: 12))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.center)
+                    .opacity(0.8)
+            }
         }
         .padding(.horizontal,70)
     }
 }
 
 struct OrchidType: View {
+    let nameofUser: String
+    
     var body: some View {
         VStack(spacing: 20) {
             Image("theOrchid")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
-            Text("You’re Orchid")
-                .font(.custom("ShantellSans-Extrabold", size: 24))
+            Text("\(nameofUser), \nYou’re Orchid")
+                .font(.custom("ShantellSans-Extrabold", size: 22))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
             Text("You can help him! It might take \nmore time, but keep improving \nand making progress")
                 .font(.custom("ShantellSans-Medium", size: 16))
                 .foregroundColor(Color(hex: 0x483528))
                 .multilineTextAlignment(.center)
+            
+            VStack(spacing: 15) {
+                Text("Mental health's impact runs deep \nand persists through time")
+                    .font(.custom("ShantellSans-Medium", size: 12))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.center)
+                    .opacity(0.8)
+                Text("Always remember to tend to your \nmental wellbeing, \nas well as that of your loved ones")
+                    .font(.custom("ShantellSans-Medium", size: 12))
+                    .foregroundColor(Color(hex: 0x483528))
+                    .multilineTextAlignment(.center)
+                    .opacity(0.8)
+            }
         }
         .padding(.horizontal,70)
     }
@@ -181,22 +231,22 @@ struct TypeView: View {
     
     var body: some View {
             ZStack {
-                Image("letterOfHelped")
+                Image("letterOfHelpedLong")
                     .resizable()
                     .scaledToFit()
-                    .padding(30)
+                    .padding(15)
                 
-                VStack(spacing: 40) {
+                VStack(spacing: 30) {
                     
                     switch stressManager.checkStressLevelType {
                     case "Type1":
-                        SunflowerType()
+                        SunflowerType(nameofUser: userModel.nameOfUser)
                     case "Type2":
-                        LotusType()
+                        LotusType(nameofUser: userModel.nameOfUser)
                     case "Type3":
-                        OrchidType()
+                        OrchidType(nameofUser: userModel.nameOfUser)
                     default:
-                        SunflowerType()
+                        SunflowerType(nameofUser: userModel.nameOfUser)
                     }
                     
                     if let image = photoModel.image {
@@ -206,6 +256,25 @@ struct TypeView: View {
                     }
                 }
             }
+    }
+}
+
+struct SavePhotoView: View {
+    let stressManager: StressManager
+    let userModel: UserModel
+    let photoModel: PhotoModel
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            TypeView(stressManager: stressManager, userModel: userModel, photoModel: photoModel)
+                .frame(width: 500, height: 600)
+            
+            Image("logoMonoChrome")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 150, height: 150)
+                .opacity(0.8)
+        }
     }
 }
 
