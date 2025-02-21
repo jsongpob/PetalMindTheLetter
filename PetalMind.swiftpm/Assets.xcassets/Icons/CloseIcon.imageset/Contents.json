@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "CloseIcon.png",
+      "filename" : "closeIcon-min.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

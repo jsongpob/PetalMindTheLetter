@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "MainButton.png",
+      "filename" : "mainButton-min.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
