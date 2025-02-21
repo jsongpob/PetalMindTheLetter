@@ -48,7 +48,7 @@ struct About: View {
                             .padding(.vertical, 0)
                         
                         VStack(spacing: 0) {
-                            VStack(spacing: 20) {
+                            VStack(spacing: 15) {
                                 Text("Font: Shantell Sans \nby www.shantellsans.com")
                                 Text("Music by Anastasia Chubarova \nfrom www.Pixabay.com")
                                 Text("All assets were created by me, \nillustrations drawn on Procreate \nand UI designed in Figma")
@@ -69,7 +69,7 @@ struct About: View {
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                    .font(.custom("ShantellSans-SemiBold", size: 16))
+                    .font(.custom("ShantellSans-SemiBold", size: 14))
                     .foregroundColor(Color(hex: 0x483528))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 15)

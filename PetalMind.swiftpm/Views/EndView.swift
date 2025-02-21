@@ -77,8 +77,8 @@ struct EndView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 240, alignment: .center)
-                            Text(onThanks ? "End" : "Continue")
-                                .font(.custom("ShantellSans-Extrabold", size: 22))
+                            Text(onThanks ? "End / Try again" : "Continue")
+                                .font(.custom("ShantellSans-Extrabold", size: 20))
                                 .foregroundColor(Color(hex: 0x483528))
                                 .multilineTextAlignment(.center)
                         }

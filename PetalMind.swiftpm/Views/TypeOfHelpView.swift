@@ -124,10 +124,24 @@ struct SunflowerType: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Image("theSunflower")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 80, height: 80)
+            HStack(spacing: 20) {
+                Image("theLotus")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .opacity(0.5)
+                
+                Image("theSunflower")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                
+                Image("theOrchid")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .opacity(0.5)
+            }
             Text("\(nameofUser), \nYou’re Sunflower")
                 .font(.custom("ShantellSans-Extrabold", size: 22))
                 .foregroundColor(Color(hex: 0x483528))
@@ -159,10 +173,24 @@ struct LotusType: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Image("theLotus")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 80, height: 80)
+            HStack(spacing: 20) {
+                Image("theSunflower")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .opacity(0.5)
+                
+                Image("theLotus")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                
+                Image("theOrchid")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .opacity(0.5)
+            }
             Text("\(nameofUser), \nYou’re Lotus")
                 .font(.custom("ShantellSans-Extrabold", size: 22))
                 .foregroundColor(Color(hex: 0x483528))
@@ -194,10 +222,24 @@ struct OrchidType: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Image("theOrchid")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 80, height: 80)
+            HStack(spacing: 20) {
+                Image("theSunflower")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .opacity(0.5)
+                
+                Image("theOrchid")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                
+                Image("theLotus")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .opacity(0.5)
+            }
             Text("\(nameofUser), \nYou’re Orchid")
                 .font(.custom("ShantellSans-Extrabold", size: 22))
                 .foregroundColor(Color(hex: 0x483528))
