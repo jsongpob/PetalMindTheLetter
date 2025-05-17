@@ -1,5 +1,5 @@
 # PetalMind The Letter
-Swift Sutdent Challenge Submission for WWDC 2025
+Swift Student Challenge Submission for WWDC 2025
 
 ![Banner](https://github.com/jsongpob/PetalMindTheLetter/blob/main/Assets/Readme/Github%20-%20Banner.png)
 
