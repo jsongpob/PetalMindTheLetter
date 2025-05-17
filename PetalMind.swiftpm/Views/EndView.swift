@@ -101,7 +101,7 @@ struct EndView: View {
         photoModel.image = nil
         storyModel.currentIndexStory = 0
         storyModel.currentIndexStory = 0
-        stressManager.stressLevel = 50.0
+        stressManager.stressLevel = Double.random(in: 30...80)
         dayManager.currentDay = 1
         dayManager.isDayOver = false
         guideViewContentModel.currentPage = 0

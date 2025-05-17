@@ -82,7 +82,7 @@ class InteractiveModel: ObservableObject {
 }
 
 class StressManager: ObservableObject {
-    @Published var stressLevel: Double = 50.0
+    @Published var stressLevel: Double = Double.random(in: 30...80)
     @Published var maxStressLevel: Double = 100.0
     @Published var checkStressLevelType: String = "Type1"
 
